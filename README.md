@@ -1,4 +1,4 @@
-# 594_groupproject
+# 594 Group Project
 Group project for MCIT 594
 
 ## Timeline
