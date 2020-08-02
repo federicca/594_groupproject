@@ -1,5 +1,6 @@
 # 594 Group Project
 Group project for MCIT 594
+[Instructions](https://github.com/federicca/594_groupproject/blob/master/Instructions.pdf)
 
 ## Timeline
 - [ ] Task 1 example - Federica
