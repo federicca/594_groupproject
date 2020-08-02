@@ -11,10 +11,10 @@ Suggested due date: Thursday 8/6
 #### Tasks
 
 - [ ] Create UML diagram - Federica and Sean
--- [ ] Data Processing - Sean
--- [ ] Data Analysis - Federica
--- [ ] Logging - Sean
--- [ ] UI - Federica
+ - [ ] Data Processing - Sean
+ - [ ] Data Analysis - Federica
+ - [ ] Logging - Sean
+ - [ ] UI - Federica
 
 ### PHASE 2 : Data Processing
 Suggested due date: Sunday 8/9
