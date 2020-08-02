@@ -15,6 +15,7 @@ Suggested due date: Thursday 8/6
   - [ ] Data Analysis - Federica
   - [ ] Logging - Sean
   - [ ] UI - Federica
+- [ ] Divide tasks for phase 2
 
 ### PHASE 2 : Data Processing
 Suggested due date: Sunday 8/9
