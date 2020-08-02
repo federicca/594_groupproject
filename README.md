@@ -10,6 +10,7 @@ Suggested due date: Thursday 8/6
 - [ ] Task 1 - Federica
 - [ ] Task 1 - Sean
 
+
 ### PHASE 2 : Data Processing
 Suggested due date: Sunday 8/9
 
@@ -17,12 +18,14 @@ Suggested due date: Sunday 8/9
 - [ ] Task 1 - Federica
 - [ ] Task 1 - Sean
 
+
 ### PHASE 3 : Data Analysis / UI / Logging
 Suggested due date: Friday 8/14
 
 #### Tasks
 - [ ] Task 1 - Federica
 - [ ] Task 1 - Sean
+
 
 ### PHASE 4 : Testing and Debugging
 Suggested due date: Project deadline Tuesday 8/18
