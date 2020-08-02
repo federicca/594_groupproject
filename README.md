@@ -13,7 +13,7 @@ Suggested due date: Thursday 8/6
 
 #### Tasks
 
-- [ ] Create UML diagram - Federica and Sean
+- [ ] Create UML diagram - [Draw.io UML](https://app.diagrams.net/#Hfedericca%2F594_groupproject%2Fmaster%2FUntitled%20Diagram.drawio)
   - [ ] Data Processing - Sean
   - [ ] Data Analysis - Federica
   - [ ] Logging - Sean
