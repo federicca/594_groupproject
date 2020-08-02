@@ -5,6 +5,7 @@ Group project for MCIT 594
 
 ## Timeline
 - [ ] Task 1 example - Federica
+    - [ ] Nested task example
 - [x] Completed Task 1 example - Sean
 
 ### PHASE 1 : Design
