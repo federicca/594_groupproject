@@ -10,9 +10,11 @@ Suggested due date: Thursday 8/6
 
 #### Tasks
 
-- [ ] Define general architecture
-- [ ] Create UML diagram
-- [ ] Divide and assign tasks for next phase
+- [ ] Create UML diagram - Federica and Sean
+-- [ ] Data Processing - Sean
+-- [ ] Data Analysis - Federica
+-- [ ] Logging - Sean
+-- [ ] UI - Federica
 
 ### PHASE 2 : Data Processing
 Suggested due date: Sunday 8/9
