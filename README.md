@@ -16,6 +16,7 @@ Suggested due date: Thursday 8/6
 - [ ] Create UML diagram - [Draw.io UML](https://app.diagrams.net/#Hfedericca%2F594_groupproject%2Fmaster%2FUntitled%20Diagram.drawio)
   - [ ] Data Processing - Sean
   - [ ] Data Analysis - Federica
+  - [ ] Data - Federica
   - [ ] Logging - Sean
   - [ ] UI - Federica
 - [ ] Divide tasks for phase 2
