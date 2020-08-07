@@ -2,11 +2,11 @@ package edu.upenn.cit594.data;
 
 public class Property {
     private int zipCode;
-    private int livableArea;
-    private int marketValue;
-    private int buildingCode;
+    private double livableArea;
+    private double marketValue;
+    private String buildingCode;
 
-    public Property(int zipCode, int livableArea, int marketValue, int buildingCode){
+    public Property(int zipCode, double livableArea, double marketValue, String buildingCode){
         this.livableArea = livableArea;
         this.zipCode = zipCode;
         this.marketValue = marketValue;
@@ -21,27 +21,27 @@ public class Property {
         this.zipCode = zipCode;
     }
 
-    public int getLiveableArea() {
+    public double getLiveableArea() {
         return livableArea;
     }
 
-    public void setLiveableArea(int livableArea) {
+    public void setLiveableArea(double livableArea) {
         this.livableArea = livableArea;
     }
 
-    public int getMarketValue() {
+    public double getMarketValue() {
         return marketValue;
     }
 
-    public void setMarketValue(int marketValue) {
+    public void setMarketValue(double marketValue) {
         this.marketValue = marketValue;
     }
 
-    public int getBuildingCode() {
+    public String getBuildingCode() {
         return buildingCode;
     }
 
-    public void setBuildingCode(int buildingCode) {
+    public void setBuildingCode(String buildingCode) {
         this.buildingCode = buildingCode;
     }
 }

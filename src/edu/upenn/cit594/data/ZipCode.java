@@ -16,6 +16,10 @@ public class ZipCode {
         this.parkingViolations = parkingViolations;
     }
 
+    public void addProperty(Property prop){
+        this.properties.add(prop);
+    }
+
     public int getCode() {
         return code;
     }

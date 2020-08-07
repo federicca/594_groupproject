@@ -2,6 +2,7 @@ package edu.upenn.cit594;
 
 import edu.upenn.cit594.data.ZipCode;
 import edu.upenn.cit594.processor.PopulationReader;
+import edu.upenn.cit594.processor.PropertiesReader;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -25,9 +26,13 @@ public class Main {
         TreeMap<Integer, ZipCode> zipCodeTreeMap;
         //Call function that populates the TreeMap and assigns the population value
         zipCodeTreeMap = pr.processPop("src/sample_files/population.txt");
+        PropertiesReader props = new PropertiesReader();
+        props.processProperties("src/sample_files/properties.csv", zipCodeTreeMap);
         //Print for testing
         for (Map.Entry<Integer, ZipCode> entry : zipCodeTreeMap.entrySet()) {
-            System.out.println("ZipCode: " + entry.getKey() + ". Population: " + entry.getValue().getPopulation());
+            if(entry.getValue().getProperties() != null) {
+                System.out.println("ZipCode: " + entry.getKey().toString() + " Population: " + entry.getValue().getPopulation() + " Number of Properties: " + entry.getValue().getProperties().size());
+            }
         }
     }
 }
