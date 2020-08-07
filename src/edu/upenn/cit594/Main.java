@@ -19,10 +19,13 @@ public class Main {
         }else{
             System.out.println("Error in runtime arguments.");
         }
-
+        //Call population reader
         PopulationReader pr = new PopulationReader();
+        //Create TreeMap for ZipCodes
         TreeMap<Integer, ZipCode> zipCodeTreeMap = new TreeMap<>();
+        //Call function that populates the TreeMap and assigns the population value
         zipCodeTreeMap = pr.processPop("src/sample_files/population.txt");
+        //Print for testing
         for (Map.Entry<Integer, ZipCode> entry : zipCodeTreeMap.entrySet()) {
             System.out.println("ZipCode: " + entry.getKey() + ". Population: " + entry.getValue().getPopulation());
         }
