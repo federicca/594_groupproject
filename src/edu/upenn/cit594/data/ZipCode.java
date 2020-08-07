@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class ZipCode {
     private int code;
     private int population;
-    private ArrayList<Property> properties = new ArrayList<>();
-    private ArrayList<ParkingViolation> parkingViolations = new ArrayList<>();
+    private ArrayList<Property> properties;
+    private ArrayList<ParkingViolation> parkingViolations;
 
     public ZipCode(int code, int population,
                    ArrayList<Property> properties, ArrayList<ParkingViolation> parkingViolations){
