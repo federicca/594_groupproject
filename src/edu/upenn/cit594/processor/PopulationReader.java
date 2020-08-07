@@ -7,9 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.TreeMap;
 
 public class PopulationReader{
@@ -29,7 +26,6 @@ public class PopulationReader{
             while ((row = br.readLine()) != null) {
                 //Get all tokens available in line
                 String[] tokens = row.split(DELIMITER);
-                // process and set lat long
                 if (tokens.length == 2) {
                     ZipCode zipCode = new ZipCode(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]), null, null);
                     zipCodeTreeMap.put(Integer.parseInt(tokens[0]),zipCode);
@@ -38,6 +34,10 @@ public class PopulationReader{
                 }
             }
         }
+        //Create unknown ZipCode object and add to tree map
+        ZipCode unknownZC = new ZipCode(0,0,null,null);
+        zipCodeTreeMap.put(-1,unknownZC);
+        //Return TreeMap
         return zipCodeTreeMap;
     }
 }

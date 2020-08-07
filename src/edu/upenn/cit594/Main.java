@@ -22,7 +22,7 @@ public class Main {
         //Call population reader
         PopulationReader pr = new PopulationReader();
         //Create TreeMap for ZipCodes
-        TreeMap<Integer, ZipCode> zipCodeTreeMap = new TreeMap<>();
+        TreeMap<Integer, ZipCode> zipCodeTreeMap;
         //Call function that populates the TreeMap and assigns the population value
         zipCodeTreeMap = pr.processPop("src/sample_files/population.txt");
         //Print for testing
