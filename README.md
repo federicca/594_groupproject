@@ -13,24 +13,27 @@ Suggested due date: Thursday 8/6
 
 #### Tasks
 
-- [ ] Create UML diagram - [Draw.io UML](https://app.diagrams.net/#Hfedericca%2F594_groupproject%2Fmaster%2FUntitled%20Diagram.drawio)
-  - [ ] Data Processing - Sean
+- [x] Create UML diagram - [Draw.io UML](https://app.diagrams.net/#Hfedericca%2F594_groupproject%2Fmaster%2FUntitled%20Diagram.drawio)
+  - [x] Data Processing - Sean
   - [x] Data Analysis - Federica
   - [x] Data - Federica
-  - [ ] Logging - Sean
+  - [x] Logging - Sean
   - [x] UI - Federica
-- [ ] Divide tasks for phase 2
+- [x] Divide tasks for phase 2
 
 ### PHASE 2 : Data Processing
 Suggested due date: Sunday 8/9
 
 #### Tasks
 - [ ] Create Main and take in runtime argument
-- [ ] Create Parking violations class
-- [ ] Parking violations CSV parser
-- [ ] Parking violations JSON parser
-- [ ] Property Values CSV parser
-- [ ] Population data Parser
+- [ ] Create Parking violations class - Sean
+- [ ] Parking violations CSV parser - Sean
+- [ ] Parking violations JSON parser - Sean
+- [ ] Property Values CSV parser - Federica
+- [ ] Population data Parser - Federica
+- [ ] Property class - Federica
+- [ ] ZipCode class - Federica
+- [ ] Create and commit java project structure - Federica
 
 
 
