@@ -9,9 +9,16 @@ import java.util.InputMismatchException;
 
 public class UserInteraction {
     public void initUI (TreeMap<Integer, ZipCode> zipCodeTreeMap){
+        String promptOpt = "\nEnter and option between 1-6, or 0 to Exit program\n" +
+                "1. Total Population for All ZIP Codes\n" +
+                "2. Total Fines Per Capita\n" +
+                "3. Average Market Value\n" +
+                "4. Average Total Livable Area\n" +
+                "5. Total Residential Market Value Per Capita\n" +
+                "6. Custom Feature\n";
         try{
             Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
-            System.out.print("Welcome User!\nEnter and option between 1-6, or 0 to Exit program\n");
+            System.out.print("Welcome User!" + promptOpt);
             int userOpt;
             int zipCode;
             while ((userOpt = sc.nextInt()) != 0) {
@@ -53,7 +60,7 @@ public class UserInteraction {
                 } else {
                     System.out.println("That's not a valid option. Please try again.");
                 }
-                System.out.println("\nEnter and option between 1-6, or 0 to Exit program");
+                System.out.println(promptOpt);
             }
 
         } catch (InputMismatchException exception) {
