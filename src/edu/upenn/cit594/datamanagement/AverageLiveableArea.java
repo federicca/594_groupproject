@@ -11,15 +11,11 @@ public class AverageLiveableArea implements Strategy{
         double sumLivableArea = 0;
         int averageLivableArea = 0;
         if(zipCodeTreeMap.containsKey(zipCode)) {
-
-
             ZipCode code = zipCodeTreeMap.get(zipCode);
-
             for (Property property : code.getProperties()) {
                 sumLivableArea += property.getLiveableArea();
             }
             averageLivableArea = (int) (sumLivableArea / code.getProperties().size());
-
         }else{
             System.out.println("No data available or invalid ZipCode");
         }

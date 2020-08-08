@@ -21,11 +21,11 @@ public class Property {
         this.zipCode = zipCode;
     }
 
-    public double getLiveableArea() {
+    public double getLivableArea() {
         return livableArea;
     }
 
-    public void setLiveableArea(double livableArea) {
+    public void setLivableArea(double livableArea) {
         this.livableArea = livableArea;
     }
 
