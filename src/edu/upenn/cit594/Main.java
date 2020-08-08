@@ -28,7 +28,7 @@ public class Main {
         zipCodeTreeMap = pr.processPop("src/sample_files/population.txt");
         // Create property reader and add properties to ZipCode TreeMap properties ArrayList
         PropertiesReader props = new PropertiesReader();
-        props.processProperties("src/sample_files/properties_small.csv", zipCodeTreeMap);
+        props.processProperties("src/sample_files/properties.csv", zipCodeTreeMap);
         // Start User Interaction
         UserInteraction ui = new UserInteraction();
         ui.initUI(zipCodeTreeMap);

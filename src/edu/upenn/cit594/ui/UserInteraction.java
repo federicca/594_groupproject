@@ -26,7 +26,7 @@ public class UserInteraction {
                 if (userOpt == 1) {
                     TotalPopulation pop = new TotalPopulation();
                     int totalPop = pop.getTotalPop(zipCodeTreeMap);
-                    System.out.println("Total Population for all Zip Codes: " + totalPop);
+                    System.out.println(totalPop);
 
                     // 2. Total Fines Per Capita
                 } else if (userOpt == 2) {
@@ -36,14 +36,14 @@ public class UserInteraction {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
                         AverageMarketValue avgMarketValue = new AverageMarketValue();
-                        System.out.println("Average market value for ZipCode: " + avgMarketValue.averageMarketValue(zipCode, zipCodeTreeMap));
+                        System.out.println(avgMarketValue.averageMarketValue(zipCode, zipCodeTreeMap));
                     }
                     // 4. Average Total Livable Area
                 } else if (userOpt == 4) {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
                         Context context = new Context(new AverageLiveableArea());
-                        System.out.println("Average Livable Area: " + context.executeStrategy(zipCode, zipCodeTreeMap));
+                        System.out.println(context.executeStrategy(zipCode, zipCodeTreeMap));
                     }
 
                     // Total Residential Market Value Per Capita
@@ -51,7 +51,7 @@ public class UserInteraction {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
                         TotalValuePC valuePC = new TotalValuePC();
-                        System.out.println("Total Residential Market Value Per Capita: " + valuePC.getTotalValuePC(zipCode, zipCodeTreeMap));
+                        System.out.println(valuePC.getTotalValuePC(zipCode, zipCodeTreeMap));
                     }
 
                     // 6. Additional Feature
