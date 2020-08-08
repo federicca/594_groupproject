@@ -35,13 +35,13 @@ public class Main {
         UserInteraction ui = new UserInteraction();
         ui.initUI(zipCodeTreeMap);
 
-        /*Print for testing
-        for (Map.Entry<Integer, ZipCode> entry : zipCodeTreeMap.entrySet()) {
+        //Print for testing
+        /*for (Map.Entry<Integer, ZipCode> entry : zipCodeTreeMap.entrySet()) {
             if(entry.getValue().getProperties() != null) {
                 System.out.println("ZipCode: " + entry.getKey().toString() + " Population: " + entry.getValue().getPopulation() + " Number of Properties: " + entry.getValue().getProperties().size());
             }
-        }
-        */
+        }*/
+
 
 
     }
