@@ -1,4 +1,4 @@
 package edu.upenn.cit594.processor;
 
-public class ViolationsReader {
+public class AdditionalFeature {
 }

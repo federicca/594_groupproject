@@ -1,4 +1,4 @@
 package edu.upenn.cit594.datamanagement;
 
-public class FinesPerCapita {
+public class CsvViolationsReader {
 }

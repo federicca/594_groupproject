@@ -2,6 +2,11 @@ package edu.upenn.cit594.ui;
 
 import edu.upenn.cit594.data.ZipCode;
 import edu.upenn.cit594.datamanagement.*;
+import edu.upenn.cit594.processor.AverageLiveableArea;
+import edu.upenn.cit594.processor.AverageMarketValue;
+import edu.upenn.cit594.processor.Context;
+import edu.upenn.cit594.processor.TotalPopulation;
+import edu.upenn.cit594.processor.TotalValuePC;
 
 import java.util.Scanner;
 import java.util.TreeMap;

@@ -1,8 +1,8 @@
 package edu.upenn.cit594;
 
 import edu.upenn.cit594.data.ZipCode;
-import edu.upenn.cit594.processor.PopulationReader;
-import edu.upenn.cit594.processor.PropertiesReader;
+import edu.upenn.cit594.datamanagement.PopulationReader;
+import edu.upenn.cit594.datamanagement.PropertiesReader;
 import edu.upenn.cit594.ui.UserInteraction;
 
 import java.io.IOException;
