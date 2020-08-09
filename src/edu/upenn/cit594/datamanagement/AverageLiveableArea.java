@@ -13,7 +13,7 @@ public class AverageLiveableArea implements Strategy{
         if(zipCodeTreeMap.containsKey(zipCode)) {
             ZipCode code = zipCodeTreeMap.get(zipCode);
             for (Property property : code.getProperties()) {
-                sumLivableArea += property.getLiveableArea();
+                sumLivableArea += property.getLivableArea();
             }
             averageLivableArea = (int) (sumLivableArea / code.getProperties().size());
         }else{
