@@ -30,8 +30,9 @@ public class Main {
         //Call function that populates the TreeMap and assigns the population value
         zipCodeTreeMap = pr.processPop("src/sample_files/population.txt");
         // Create property reader and add properties to ZipCode TreeMap properties ArrayList
+        // Good sample ZipCode for small properties file: 19143
         PropertiesReader props = new PropertiesReader();
-        props.processProperties("src/sample_files/properties.csv", zipCodeTreeMap);
+        props.processProperties("src/sample_files/properties_small.csv", zipCodeTreeMap);
         // Start User Interaction
         UserInteraction ui = new UserInteraction();
         ui.initUI(zipCodeTreeMap);
