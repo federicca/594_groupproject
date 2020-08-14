@@ -6,6 +6,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeMap;
 
 import org.json.simple.JSONArray;
@@ -17,13 +19,14 @@ import edu.upenn.cit594.data.Car;
 import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.ZipCode;
 
-public class JsonViolationsReader implements ViolationsReader {
+public class JsonViolationsReader extends ParentViolationsReader implements ViolationsReader {
     
     // Date format for input file
     private static final DateFormat DF = new SimpleDateFormat("yyyy-mm-dd'T'kk:mm:ss'Z'");
 
     @Override
-    public void readViolationsIntoZipCode(String filename, TreeMap<Integer, ZipCode> zipCodeTreeMap) {
+    public List<ParkingViolation> readViolationsIntoZipCode(String filename, TreeMap<Integer, ZipCode> zipCodeTreeMap) {
+        List<ParkingViolation> violations = new LinkedList<>();
         JSONParser parser = new JSONParser();
         try {
             JSONArray data = (JSONArray)parser.parse(new FileReader(filename));
@@ -61,22 +64,16 @@ public class JsonViolationsReader implements ViolationsReader {
                 
                 // get zipCode
                 String zipString = (String) jsonViolation.get("zip_code");
-                int zipCode = 0;
+                int zipCode = -1;
                 if (!zipString.equals("")) {
                     zipCode = Integer.parseInt(zipString);
                 }
-                
-                // Create car object
-                Car car = new Car(carID, carState);
-                
-                // Create ParkingViolation object
-                ParkingViolation violation = new ParkingViolation(timeStamp, fineDue, description, violationID, zipCode);
-                
-                // Add this violation 
+                transferData(timeStamp, fineDue, description, carID, carState, violationID, zipCode, zipCodeTreeMap, violations);
             }
         } catch (IOException | ParseException e) {
             System.out.println("JSON parse unsuccessful");
             e.printStackTrace();
-        }        
+        }
+        return violations;
     }
 }

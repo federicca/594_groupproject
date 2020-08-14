@@ -28,7 +28,7 @@ public class PopulationReader{
                 //Get all tokens available in line
                 String[] tokens = row.split(DELIMITER);
                 if (tokens.length == 2) {
-                    ZipCode zipCode = new ZipCode(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]), null, null);
+                    ZipCode zipCode = new ZipCode(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]));
                     zipCodeTreeMap.put(Integer.parseInt(tokens[0]),zipCode);
                 } else {
                     System.out.println("Incompatible CSV format: wrong number of tokens");
@@ -36,7 +36,7 @@ public class PopulationReader{
             }
         }
         //Create unknown ZipCode object and add to tree map
-        ZipCode unknownZC = new ZipCode(0,0,null,null);
+        ZipCode unknownZC = new ZipCode(0,0);
         zipCodeTreeMap.put(-1,unknownZC);
         //Return TreeMap
         return zipCodeTreeMap;

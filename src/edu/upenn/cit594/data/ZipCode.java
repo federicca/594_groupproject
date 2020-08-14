@@ -8,12 +8,11 @@ public class ZipCode {
     private ArrayList<Property> properties;
     private ArrayList<ParkingViolation> parkingViolations;
 
-    public ZipCode(int code, int population,
-                   ArrayList<Property> properties, ArrayList<ParkingViolation> parkingViolations){
+    public ZipCode(int code, int population){
         this.code = code;
         this.population = population;
-        this.properties = properties;
-        this.parkingViolations = parkingViolations;
+        properties = new ArrayList<>();
+        parkingViolations = new ArrayList<>();
     }
 
     public void addProperty(Property prop){

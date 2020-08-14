@@ -2,15 +2,18 @@ package edu.upenn.cit594.datamanagement;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TreeMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import edu.upenn.cit594.data.ParkingViolation;
+import edu.upenn.cit594.data.ZipCode;
 
 /**
  * Make this inclusive of the JSON reader next time
@@ -19,22 +22,32 @@ import edu.upenn.cit594.data.ParkingViolation;
  */
 class ViolationsReaderTest {
     
-    String csvFilename = "src\\sample_files\\parking.csv";
-    String jsonFilename = "src\\sample_files\\parking.json";
-    CsvViolationsReader cvr;
-    JsonViolationsReader jvr;
+    private String csvFilename = "src\\sample_files\\parking.csv";
+    private String jsonFilename = "src\\sample_files\\parking.json";
+    private String popFilename = "src\\sample_files\\population.txt";
+    private CsvViolationsReader cvr;
+    private JsonViolationsReader jvr;
     private static final DateFormat DF = new SimpleDateFormat("yyyy-mm-dd'T'kk:mm:ss'Z'");
-
-
+    private TreeMap<Integer, ZipCode> zipCodeTreeMap;
+    
     @BeforeEach
     void setUp() {
-        jvr = new JsonViolationsReader();
+        PopulationReader pr = new PopulationReader();
+        try {
+            zipCodeTreeMap = pr.processPop(popFilename);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     @Test
     void testGetAllViolationsCsv() {
         cvr = new CsvViolationsReader();
-        List<ParkingViolation> violations = cvr.getAllViolations(csvFilename);
+        List<ParkingViolation> violations = cvr.readViolationsIntoZipCode(csvFilename, zipCodeTreeMap);
         ParkingViolation result0 = violations.get(0);
         ParkingViolation result31 = violations.get(31);
         ParkingViolation result25558 = violations.get(25558);
@@ -97,7 +110,7 @@ class ViolationsReaderTest {
     @Test
     void testGetAllViolationsJson() {
         jvr = new JsonViolationsReader();
-        List<ParkingViolation> violations = jvr.getAllViolations(jsonFilename);
+        List<ParkingViolation> violations = jvr.readViolationsIntoZipCode(jsonFilename, zipCodeTreeMap);
         ParkingViolation result0 = violations.get(0);
         ParkingViolation result31 = violations.get(31);
         ParkingViolation result25558 = violations.get(25558);

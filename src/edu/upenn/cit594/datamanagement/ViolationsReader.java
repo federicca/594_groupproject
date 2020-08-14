@@ -8,6 +8,6 @@ import edu.upenn.cit594.data.ZipCode;
 
 public interface ViolationsReader {
     
-    public void readViolationsIntoZipCode(String filename, TreeMap<Integer, ZipCode> zipCodeTreeMap);
+    public List<ParkingViolation> readViolationsIntoZipCode(String filename, TreeMap<Integer, ZipCode> zipCodeTreeMap);
     
 }
