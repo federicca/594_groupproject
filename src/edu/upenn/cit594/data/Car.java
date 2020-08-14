@@ -7,13 +7,13 @@ public class Car {
     
     private int id;
     private String state; 
-    private HashSet<ParkingViolation> violations; 
+    private LinkedList<ParkingViolation> violations; 
     // ^HS to take advantage of efficiency w/ adding nodes and contains()
     
     public Car(int id, String state) {
         this.id = id;
         this.state = state;
-        violations = new HashSet<>();
+        violations = new LinkedList<>();
     }
     
     public int getId() {
@@ -24,7 +24,7 @@ public class Car {
         return state;
     }
 
-    public HashSet<ParkingViolation> getViolations() {
+    public LinkedList<ParkingViolation> getViolations() {
         return violations;
     }
 

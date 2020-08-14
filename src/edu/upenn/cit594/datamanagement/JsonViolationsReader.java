@@ -4,17 +4,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
+import java.util.TreeMap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import edu.upenn.cit594.data.Car;
 import edu.upenn.cit594.data.ParkingViolation;
+import edu.upenn.cit594.data.ZipCode;
 
 public class JsonViolationsReader implements ViolationsReader {
     
@@ -22,8 +23,7 @@ public class JsonViolationsReader implements ViolationsReader {
     private static final DateFormat DF = new SimpleDateFormat("yyyy-mm-dd'T'kk:mm:ss'Z'");
 
     @Override
-    public List<ParkingViolation> getAllViolations(String filename) {
-        List<ParkingViolation> violationList = new ArrayList<>();
+    public void readViolationsIntoZipCode(String filename, TreeMap<Integer, ZipCode> zipCodeTreeMap) {
         JSONParser parser = new JSONParser();
         try {
             JSONArray data = (JSONArray)parser.parse(new FileReader(filename));
@@ -66,13 +66,17 @@ public class JsonViolationsReader implements ViolationsReader {
                     zipCode = Integer.parseInt(zipString);
                 }
                 
-                violationList.add(new ParkingViolation(timeStamp, fineDue, description, carID, carState, violationID, zipCode));
+                // Create car object
+                Car car = new Car(carID, carState);
+                
+                // Create ParkingViolation object
+                ParkingViolation violation = new ParkingViolation(timeStamp, fineDue, description, violationID, zipCode);
+                
+                // Add this violation 
             }
         } catch (IOException | ParseException e) {
             System.out.println("JSON parse unsuccessful");
             e.printStackTrace();
-        }
-        
-        return violationList;
+        }        
     }
 }
