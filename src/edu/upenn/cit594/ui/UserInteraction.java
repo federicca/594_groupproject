@@ -1,16 +1,11 @@
 package edu.upenn.cit594.ui;
 
 import edu.upenn.cit594.data.ZipCode;
-import edu.upenn.cit594.datamanagement.*;
-import edu.upenn.cit594.processor.AverageLiveableArea;
-import edu.upenn.cit594.processor.AverageMarketValue;
-import edu.upenn.cit594.processor.Context;
-import edu.upenn.cit594.processor.TotalPopulation;
-import edu.upenn.cit594.processor.TotalValuePC;
+import edu.upenn.cit594.processor.*;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.TreeMap;
-import java.util.InputMismatchException;
 
 public class UserInteraction {
     public void initUI (TreeMap<Integer, ZipCode> zipCodeTreeMap){
@@ -22,7 +17,7 @@ public class UserInteraction {
                 "5. Total Residential Market Value Per Capita\n" +
                 "6. Custom Feature\n";
         try{
-            Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
+            Scanner sc= new Scanner(System.in);
             System.out.print("Welcome User!" + promptOpt);
             int userOpt;
             int zipCode;
@@ -40,8 +35,8 @@ public class UserInteraction {
                 } else if (userOpt == 3) {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
-                        AverageMarketValue avgMarketValue = new AverageMarketValue();
-                        System.out.println(avgMarketValue.averageMarketValue(zipCode, zipCodeTreeMap));
+                        Context context = new Context(new AverageMarketValue());
+                        System.out.println(context.executeStrategy(zipCode, zipCodeTreeMap));
                     }
                     // 4. Average Total Livable Area
                 } else if (userOpt == 4) {
