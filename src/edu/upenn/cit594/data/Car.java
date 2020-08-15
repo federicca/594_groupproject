@@ -1,19 +1,18 @@
 package edu.upenn.cit594.data;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 
 public class Car {
     
     private int id;
     private String state; 
-    private LinkedList<ParkingViolation> violations; 
+    private HashSet<ParkingViolation> violations; 
     // ^HS to take advantage of efficiency w/ adding nodes and contains()
     
     public Car(int id, String state) {
         this.id = id;
         this.state = state;
-        violations = new LinkedList<>();
+        violations = new HashSet<>();
     }
     
     public int getId() {
@@ -24,7 +23,7 @@ public class Car {
         return state;
     }
 
-    public LinkedList<ParkingViolation> getViolations() {
+    public HashSet<ParkingViolation> getViolations() {
         return violations;
     }
 

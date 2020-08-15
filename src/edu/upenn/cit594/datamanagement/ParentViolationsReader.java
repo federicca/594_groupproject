@@ -10,6 +10,18 @@ import edu.upenn.cit594.data.ZipCode;
 
 public abstract class ParentViolationsReader {
     
+    /**
+     * Performs the common operation of creating the data objects and adding them to the list and treemap
+     * @param timeStamp
+     * @param fineDue
+     * @param description
+     * @param carID
+     * @param carState
+     * @param violationID
+     * @param zipCode
+     * @param zipCodeTreeMap
+     * @param violations
+     */
     public void transferData(Date timeStamp, int fineDue, String description, int carID, String carState,
             int violationID, int zipCode, TreeMap<Integer, ZipCode> zipCodeTreeMap, List<ParkingViolation> violations) {
         // Create car object

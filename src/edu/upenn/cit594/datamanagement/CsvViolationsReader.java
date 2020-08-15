@@ -1,14 +1,15 @@
 package edu.upenn.cit594.datamanagement;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.TreeMap;
 
 import edu.upenn.cit594.data.ParkingViolation;
@@ -23,12 +24,14 @@ public class CsvViolationsReader extends ParentViolationsReader implements Viola
     public List<ParkingViolation> readViolationsIntoZipCode(String filename, TreeMap<Integer, ZipCode> zipCodeTreeMap) {
         List<ParkingViolation> violations = new LinkedList<>();
         try {
-            Scanner in = new Scanner(new File(filename));
-            while (in.hasNextLine()) {
-                String[] data = in.nextLine().split(","); // splits each line into 6 or 7 fields
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String data;
+            
+            while ((data = br.readLine()) != null) {
+                String[] values = data.split(","); // splits each line into 6 or 7 fields
                 
                 // Field 0: dateString -> timeStamp (parse Date)
-                String dateString = data[0];
+                String dateString = values[0];
                 Date timeStamp = null;
                 try {
                     timeStamp = DF.parse(dateString);
@@ -38,30 +41,30 @@ public class CsvViolationsReader extends ParentViolationsReader implements Viola
                 }
                 
                 // Field 1: fineDue (parse Integer)
-                int fineDue = Integer.parseInt(data[1]);
+                int fineDue = Integer.parseInt(values[1]);
                 
                 // Field 2: description
-                String description = data[2];
+                String description = values[2];
                 
                 // Field 3: carID (parse Integer)
-                int carID = Integer.parseInt(data[3]);
+                int carID = Integer.parseInt(values[3]);
                 
                 // Field 4: carState
-                String carState = data[4];
+                String carState = values[4];
                 
                 // Field 5: violationID (parse Integer)
-                int violationID = Integer.parseInt(data[5]);
+                int violationID = Integer.parseInt(values[5]);
                 
                 // Field 6 (if it exists): zipCode (parse Integer)
                 int zipCode = 0;
-                if (data.length == 7) {
-                    zipCode = Integer.parseInt(data[6]);
+                if (values.length == 7) {
+                    zipCode = Integer.parseInt(values[6]);
                 }
                 
                 transferData(timeStamp, fineDue, description, carID, carState, violationID, zipCode, zipCodeTreeMap, violations);
             }   
-            in.close();
-        } catch (FileNotFoundException e) {
+            br.close();
+        } catch (IOException e) {
             System.out.println("Parking Violations CSV file does not exist or cannot be opened for reading.");
             e.printStackTrace();
         }
