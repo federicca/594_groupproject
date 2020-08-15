@@ -48,6 +48,9 @@ public class PropertiesReader {
                 parseTokens(tokens);
                 // create new property object with the variables
                 Property prop = new Property(code, livableArea, marketValue, buildingCode);
+                // Print new property object
+                // System.out.println("ZipCode: " + prop.getZipCode() + " Market Value: $" + prop.getMarketValue() + " Livable Area: " + prop.getLivableArea() + " Building Code: " + prop.getBuildingCode());
+
                 // Get ZipCode object and check whether it has a properties ArrayList, if not create one
                 if (zipCodeTreeMap.containsKey(code)) {
                     // add property to corresponding ZipCode array of properties
@@ -61,7 +64,7 @@ public class PropertiesReader {
     }
 
     // Method that takes in tokens from the header and assigns the index to each variable
-    public void columnPositions (String[] columns){
+    private void columnPositions (String[] columns){
         for (int i = 0; i < columns.length; i++) {
             if (columns[i].equals("zip_code")){
                 zipCodePos = i;
@@ -76,7 +79,7 @@ public class PropertiesReader {
     }
 
     // Gets tokens from row and processes them to the right data type and format
-    public void parseTokens (String[]tokens) {
+    private void parseTokens (String[]tokens) {
         //make ZipCode 5 digits
         String codeToTrim = tokens[zipCodePos];
         String[] trim = codeToTrim.split("(?<=\\G.....)");
