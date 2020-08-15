@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class PropertiesReader {
@@ -51,16 +50,10 @@ public class PropertiesReader {
                 Property prop = new Property(code, livableArea, marketValue, buildingCode);
                 // Get ZipCode object and check whether it has a properties ArrayList, if not create one
                 if (zipCodeTreeMap.containsKey(code)) {
-                    if (zipCodeTreeMap.get(code).getProperties() == null){
-                        zipCodeTreeMap.get(code).setProperties(new ArrayList<>());
-                    }
                     // add property to corresponding ZipCode array of properties
                     zipCodeTreeMap.get(code).addProperty(prop);
                 }else{
                     // If the ZipCode doesn't exist add property to unknown ZipCode (-1)
-                    if (zipCodeTreeMap.get(-1).getProperties() == null){
-                    zipCodeTreeMap.get(-1).setProperties(new ArrayList<>());
-                }
                     zipCodeTreeMap.get(-1).addProperty(prop);
                 }
             }
