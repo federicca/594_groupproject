@@ -8,7 +8,18 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class UserInteraction {
-    public void initUI (TreeMap<Integer, ZipCode> zipCodeTreeMap){
+    
+    protected Processor processor;
+    
+    /**
+     * In N-tier architecture, UserInteraction has a dependency on Processor
+     * @param processor used by this UserInteraction
+     */
+    public UserInteraction(Processor processor) {
+        this.processor = processor;
+    }
+    
+    public void initUI (){
         String promptOpt = "\nEnter and option between 1-6, or 0 to Exit program\n" +
                 "1. Total Population for All ZIP Codes\n" +
                 "2. Total Fines Per Capita\n" +
@@ -24,8 +35,15 @@ public class UserInteraction {
             while ((userOpt = sc.nextInt()) != 0) {
                 //1. Total Population for All ZIP Codes
                 if (userOpt == 1) {
-                    TotalPopulation pop = new TotalPopulation();
-                    int totalPop = pop.getTotalPop(zipCodeTreeMap);
+                    
+                    /**
+                     * instead of instantiating TotalPop object, use
+                     * processor's getTotalPop() method
+                     */
+                    
+//                    TotalPopulation pop = new TotalPopulation();
+                    int totalPop = processor.getTotalPop();
+//                    int totalPop = pop.getTotalPop(zipCodeTreeMap);
                     System.out.println(totalPop);
 
                     // 2. Total Fines Per Capita
@@ -36,14 +54,18 @@ public class UserInteraction {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
                         Context context = new Context(new AverageMarketValue());
-                        System.out.println(context.executeStrategy(zipCode, zipCodeTreeMap));
+                        int avgMarketValue = processor.getAverageMarketValue(zipCode);
+//                        System.out.println(context.executeStrategy(zipCode, zipCodeTreeMap));
+                        System.out.println(avgMarketValue);
                     }
                     // 4. Average Total Livable Area
                 } else if (userOpt == 4) {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
                         Context context = new Context(new AverageLiveableArea());
-                        System.out.println(context.executeStrategy(zipCode, zipCodeTreeMap));
+                        int avgTotalLiveableArea = processor.getAverageMarketValue(zipCode);
+//                        System.out.println(context.executeStrategy(zipCode, zipCodeTreeMap));
+                        System.out.println(avgTotalLiveableArea);
                     }
 
                     // Total Residential Market Value Per Capita
@@ -51,7 +73,9 @@ public class UserInteraction {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
                         TotalValuePC valuePC = new TotalValuePC();
-                        System.out.println(valuePC.getTotalValuePC(zipCode, zipCodeTreeMap));
+//                        System.out.println(valuePC.getTotalValuePC(zipCode, zipCodeTreeMap));
+                        int marketValuePC = processor.getTotalValuePC(zipCode);
+                        System.out.println(marketValuePC);
                     }
 
                     // 6. Additional Feature

@@ -3,6 +3,7 @@ package edu.upenn.cit594;
 import edu.upenn.cit594.data.ZipCode;
 import edu.upenn.cit594.datamanagement.PopulationReader;
 import edu.upenn.cit594.datamanagement.PropertiesReader;
+import edu.upenn.cit594.processor.Processor;
 import edu.upenn.cit594.ui.UserInteraction;
 
 import java.io.IOException;
@@ -11,31 +12,40 @@ import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
-        if(args.length == 5) {
-            String violationsFormat = args[0];
-            String violationsFile = args[1];
-            String propertyValuesFile = args[2];
-            String populationFile = args[3];
-            String logfile = args[4];
-        }else{
+        if(args.length != 5) {
             System.out.println("Error in runtime arguments.");
         }
+        String violationsFormat = args[0];
+        String violationsFile = args[1];
+        String propertyValuesFile = args[2];
+        String populationFile = args[3];
+        String logfile = args[4];
 
+        // Create Processor object
+        Processor processor = new Processor(violationsFormat);
+        
+        // Initialize data
+        processor.initializeData(violationsFile, propertyValuesFile, populationFile);
+        
+        /**
+         * Below code is taken care of in Processor.initializeData()
+         */
+        
         //Call population reader
-        PopulationReader pr = new PopulationReader();
+//        PopulationReader pr = new PopulationReader();
         //Create TreeMap for ZipCodes
-        TreeMap<Integer, ZipCode> zipCodeTreeMap;
+//        TreeMap<Integer, ZipCode> zipCodeTreeMap;
         //Print patience statement
         System.out.println("Please wait while we process the data...");
         //Call function that populates the TreeMap and assigns the population value
-        zipCodeTreeMap = pr.processPop("src/sample_files/population.txt");
+//        zipCodeTreeMap = pr.processPop("src/sample_files/population.txt");
         // Create property reader and add properties to ZipCode TreeMap properties ArrayList
         // Good sample ZipCode for small properties file: 19143
-        PropertiesReader props = new PropertiesReader();
-        props.processProperties("src/sample_files/properties_small.csv", zipCodeTreeMap);
+//        PropertiesReader props = new PropertiesReader();
+//        props.processProperties("src/sample_files/properties_small.csv", zipCodeTreeMap);
         // Start User Interaction
-        UserInteraction ui = new UserInteraction();
-        ui.initUI(zipCodeTreeMap);
+        UserInteraction ui = new UserInteraction(processor);
+        ui.initUI();
 
         //Print for testing
         /*for (Map.Entry<Integer, ZipCode> entry : zipCodeTreeMap.entrySet()) {
