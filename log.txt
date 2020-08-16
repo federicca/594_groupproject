@@ -1,0 +1,2 @@
+1597599702566 csv src\\sample_files\\parking.csv src\\sample_files\\properties_small.csv src\\sample_files\\population.txt log.txt 
+1597600317606 csv src\\sample_files\\parking.csv src\\sample_files\\properties_small.csv src\\sample_files\\population.txt log.txt 

@@ -1,11 +1,12 @@
 package edu.upenn.cit594.ui;
 
-import java.text.DecimalFormat;
 import java.util.InputMismatchException;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.TreeMap;
 
 import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.AverageLiveableArea;
 import edu.upenn.cit594.processor.AverageMarketValue;
 import edu.upenn.cit594.processor.Context;
@@ -15,18 +16,17 @@ import edu.upenn.cit594.processor.TotalValuePC;
 public class UserInteraction {
     
     protected Processor processor;
-    protected DecimalFormat df = new DecimalFormat("#.####");
     
     /**
      * In N-tier architecture, UserInteraction has a dependency on Processor
      * @param processor used by this UserInteraction
      */
-    public UserInteraction(Processor processor) {
+    public UserInteraction(Processor processor, Logger logger) {
         this.processor = processor;
     }
     
     public void initUI (){
-        String promptOpt = "\nEnter and option between 1-6, or 0 to Exit program\n" +
+        String promptOpt = "\nEnter an option between 1-6, or 0 to Exit program\n" +
                 "1. Total Population for All ZIP Codes\n" +
                 "2. Total Fines Per Capita\n" +
                 "3. Average Market Value\n" +
@@ -34,7 +34,7 @@ public class UserInteraction {
                 "5. Total Residential Market Value Per Capita\n" +
                 "6. Custom Feature\n";
         try{
-            Scanner sc= new Scanner(System.in);
+            Scanner sc = new Scanner(System.in);
             System.out.print("Welcome User!" + promptOpt);
             int userOpt;
             int zipCode;
@@ -55,6 +55,12 @@ public class UserInteraction {
                     // 2. Total Fines Per Capita
                 } else if (userOpt == 2) {
                     TreeMap<Integer, ZipCode> zips = processor.getzipCodeTreeMap();
+                    
+                    // 
+                    Entry<Integer, ZipCode> first = null;
+                    if (zips.firstKey() == -1) {
+                        first = zips.pollFirstEntry();
+                    }
                     for (Integer zipInt : zips.keySet()) {
                         /**
                          * print out zipcode followed by space followed by totalFinesPC
@@ -62,6 +68,10 @@ public class UserInteraction {
                          */
                         double totalFinesPC = processor.getTotalFinesPerCapita(zipInt);
                         System.out.printf("%d %.4f\n", zipInt, totalFinesPC);
+                    }
+                    // Add the first entry back to the TreeMap
+                    if (first != null) {
+                        zips.put(first.getKey(), first.getValue());
                     }
 
                     // 3. Average Market Value

@@ -22,28 +22,24 @@ public class Processor {
     protected ViolationsReader violationsReader;
     protected String violationsFilename;
     protected TreeMap<Integer, ZipCode> zipCodeTreeMap;
-    protected boolean dataInitialized;
     
     /**
      * Creates all required reader objects in constructor
      * @param format of Parking Violations file (csv or json)
      */
-    public Processor(String format) {
+    public Processor(String format, String violationsFilename, String propertiesFilename,
+            String populationFilename) {
+        
+        // instantiate readers
         populationReader = new PopulationReader();
         propertiesReader = new PropertiesReader();
         violationsReader = createViolationsReader(format);
-        dataInitialized = false;
+        
+        // initialize data
+        initializeData(violationsFilename, propertiesFilename, populationFilename);
     }
     
-    /**
-     * Checks if data is already initialized - if not, initializes data first, then
-     * returns zipCodeTreeMap
-     * @return
-     */
     public TreeMap<Integer, ZipCode> getzipCodeTreeMap() {
-        if (!dataInitialized) {
-            System.out.println("WARNING: Data was never initialized");
-        }
         return zipCodeTreeMap;
     }
     
@@ -54,7 +50,7 @@ public class Processor {
      * @param propertiesFilename
      * @param populationFilename
      */
-    public void initializeData(String violationsFilename, String propertiesFilename,
+    private void initializeData(String violationsFilename, String propertiesFilename,
             String populationFilename) {
         // Create TreeMap
         try {
@@ -78,8 +74,6 @@ public class Processor {
         // Populate ArrayList fields of zipCode objects step 2: Parking Violations
         violationsReader.readViolationsIntoZipCode(violationsFilename, zipCodeTreeMap);
         
-        // Set dataInitialized field to true
-        dataInitialized = true;
     }
     
     /**
