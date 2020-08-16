@@ -1,2 +1,23 @@
 1597599702566 csv src\\sample_files\\parking.csv src\\sample_files\\properties_small.csv src\\sample_files\\population.txt log.txt 
 1597600317606 csv src\\sample_files\\parking.csv src\\sample_files\\properties_small.csv src\\sample_files\\population.txt log.txt 
+Current time: 1597607209647 Runtime args: csv src\\sample_files\\parking.csv src\\sample_files\\properties_small.csv src\\sample_files\\population.txt log.txt 
+Current time: 1597607209680 File opened: src\\sample_files\\population.txt
+Current time: 1597607209686 File opened: src\\sample_files\\properties_small.csv
+Current time: 1597607214966 File opened: src\\sample_files\\parking.csv
+Current time: 1597607225624 User selected: 2
+Current time: 1597607232582 User selected: 1
+Current time: 1597607236617 User selected: 3
+Current time: 1597607240146 User input: 19103
+Current time: 1597607251625 User selected: 4
+Current time: 1597607255579 User input: 19104
+Current time: 1597607265221 User selected: 5
+Current time: 1597607269883 User input: 19104
+Current time: 1597607296993 User selected: 5
+Current time: 1597607298957 User input: 19103
+Current time: 1597607329230 User selected: 3
+Current time: 1597607335706 User input: 19104
+Current time: 1597609708636 Runtime args: csv src\\sample_files\\parking.csv src\\sample_files\\properties_small.csv src\\sample_files\\population.txt log.txt 
+Current time: 1597609708674 File opened: src\\sample_files\\population.txt
+Current time: 1597609708677 File opened: src\\sample_files\\properties_small.csv
+Current time: 1597609713428 File opened: src\\sample_files\\parking.csv
+Current time: 1597609724676 User selected: 2

@@ -114,21 +114,28 @@ public class Processor {
      * Q2
      * Calculates total fines per capita by dividing total sum of fines in given zipcode
      * by total population
+     * Note: must ignore non-PA license plates
      * @param zipCode
      * @return fines per capita
      */
-    public double getTotalFinesPerCapita(int zipCode) {
+    public double getTotalFinesPerCapita(int zipCode) throws IllegalArgumentException {
+
         ZipCode zc = zipCodeTreeMap.get(zipCode);
         ArrayList<ParkingViolation> violations = zc.getParkingViolations();
         
         // Calculate total fines
         int totalFines = 0;
         for (ParkingViolation violation : violations) {
-            totalFines += violation.getFineDue();
+            if (violation.getCarState().equals("PA")) {
+                totalFines += violation.getFineDue();
+            }
         }
         
         // Get population
         int population = zc.getPopulation();
+        if (population == 0) {
+            throw new IllegalArgumentException(); 
+        }
         
         // Return total fines / population
         return (double) totalFines / population;

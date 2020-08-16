@@ -36,7 +36,6 @@ public class Logger {
         logCurrentTime();
         
         // write runtime args
-        out.print("Runtime args: ");
         for (int i = 0; i < 5; i++) {
             out.print(args[i] + " ");
         }
@@ -86,7 +85,7 @@ public class Logger {
      * System.currentTimeMillis()
      */
     private void logCurrentTime() {
-        out.print("Current time: " + System.currentTimeMillis() + " ");
+        out.print(System.currentTimeMillis() + " ");
     }
     
     /**

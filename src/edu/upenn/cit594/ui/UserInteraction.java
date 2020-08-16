@@ -21,6 +21,7 @@ public class UserInteraction {
     /**
      * In N-tier architecture, UserInteraction has a dependency on Processor
      * @param processor used by this UserInteraction
+     * @param logger to log user input
      */
     public UserInteraction(Processor processor, Logger logger) {
         this.processor = processor;
@@ -59,7 +60,7 @@ public class UserInteraction {
                 } else if (userOpt == 2) {
                     TreeMap<Integer, ZipCode> zips = processor.getzipCodeTreeMap();
                     
-                    // 
+                    // Pop first entry from treemap since it represents unknown zipcode
                     Entry<Integer, ZipCode> first = null;
                     if (zips.firstKey() == -1) {
                         first = zips.pollFirstEntry();
@@ -69,8 +70,15 @@ public class UserInteraction {
                          * print out zipcode followed by space followed by totalFinesPC
                          * (4 decimal places, truncated)
                          */
-                        double totalFinesPC = processor.getTotalFinesPerCapita(zipInt);
-                        System.out.printf("%d %.4f\n", zipInt, totalFinesPC);
+                        try{
+                            double totalFinesPC = processor.getTotalFinesPerCapita(zipInt);
+                            if (totalFinesPC > 0) {
+                                System.out.printf("%d %.4f\n", zipInt, totalFinesPC);
+                            }
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Divide by zero: Population = 0 for zipcode + " + zipInt);
+                        }
+
                     }
                     // Add the first entry back to the TreeMap
                     if (first != null) {
@@ -117,6 +125,7 @@ public class UserInteraction {
 
                 } else {
                     System.out.println("That's not a valid option. Please try again.");
+                    return;
                 }
                 System.out.println(promptOpt);
             }
