@@ -22,6 +22,7 @@ public class Processor {
     protected ViolationsReader violationsReader;
     protected String violationsFilename;
     protected TreeMap<Integer, ZipCode> zipCodeTreeMap;
+    protected boolean dataInitialized;
     
     /**
      * Creates all required reader objects in constructor
@@ -30,7 +31,20 @@ public class Processor {
     public Processor(String format) {
         populationReader = new PopulationReader();
         propertiesReader = new PropertiesReader();
-        violationsReader = createViolationsReader(format);        
+        violationsReader = createViolationsReader(format);
+        dataInitialized = false;
+    }
+    
+    /**
+     * Checks if data is already initialized - if not, initializes data first, then
+     * returns zipCodeTreeMap
+     * @return
+     */
+    public TreeMap<Integer, ZipCode> getzipCodeTreeMap() {
+        if (!dataInitialized) {
+            System.out.println("WARNING: Data was never initialized");
+        }
+        return zipCodeTreeMap;
     }
     
     /**
@@ -63,6 +77,9 @@ public class Processor {
         
         // Populate ArrayList fields of zipCode objects step 2: Parking Violations
         violationsReader.readViolationsIntoZipCode(violationsFilename, zipCodeTreeMap);
+        
+        // Set dataInitialized field to true
+        dataInitialized = true;
     }
     
     /**

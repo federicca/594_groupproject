@@ -1,15 +1,21 @@
 package edu.upenn.cit594.ui;
 
-import edu.upenn.cit594.data.ZipCode;
-import edu.upenn.cit594.processor.*;
-
+import java.text.DecimalFormat;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.processor.AverageLiveableArea;
+import edu.upenn.cit594.processor.AverageMarketValue;
+import edu.upenn.cit594.processor.Context;
+import edu.upenn.cit594.processor.Processor;
+import edu.upenn.cit594.processor.TotalValuePC;
+
 public class UserInteraction {
     
     protected Processor processor;
+    protected DecimalFormat df = new DecimalFormat("#.####");
     
     /**
      * In N-tier architecture, UserInteraction has a dependency on Processor
@@ -48,6 +54,15 @@ public class UserInteraction {
 
                     // 2. Total Fines Per Capita
                 } else if (userOpt == 2) {
+                    TreeMap<Integer, ZipCode> zips = processor.getzipCodeTreeMap();
+                    for (Integer zipInt : zips.keySet()) {
+                        /**
+                         * print out zipcode followed by space followed by totalFinesPC
+                         * (4 decimal places, truncated)
+                         */
+                        double totalFinesPC = processor.getTotalFinesPerCapita(zipInt);
+                        System.out.printf("%d %.4f\n", zipInt, totalFinesPC);
+                    }
 
                     // 3. Average Market Value
                 } else if (userOpt == 3) {
