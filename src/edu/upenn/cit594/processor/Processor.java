@@ -2,9 +2,11 @@ package edu.upenn.cit594.processor;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.Property;
 import edu.upenn.cit594.data.ZipCode;
 import edu.upenn.cit594.datamanagement.CsvViolationsReader;
@@ -96,12 +98,24 @@ public class Processor {
      * Q2
      * Calculates total fines per capita by dividing total sum of fines in given zipcode
      * by total population
+     * @param zipCode
      * @return fines per capita
      */
-    public double getTotalFinesPerCapita() {
-        double finesPerCapita = 0;
+    public double getTotalFinesPerCapita(int zipCode) {
+        ZipCode zc = zipCodeTreeMap.get(zipCode);
+        ArrayList<ParkingViolation> violations = zc.getParkingViolations();
         
-        return finesPerCapita;
+        // Calculate total fines
+        int totalFines = 0;
+        for (ParkingViolation violation : violations) {
+            totalFines += violation.getFineDue();
+        }
+        
+        // Get population
+        int population = zc.getPopulation();
+        
+        // Return total fines / population
+        return (double) totalFines / population;
     }
     
     /**

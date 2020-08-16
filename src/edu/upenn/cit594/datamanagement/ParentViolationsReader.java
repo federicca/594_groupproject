@@ -31,14 +31,16 @@ public abstract class ParentViolationsReader {
         ParkingViolation violation = new ParkingViolation(timeStamp, fineDue, description, carID, carState, violationID, zipCode);
         violations.add(violation);
         
-        // Add this violation to the LL of violations for this car
+        // Add this violation to the HS of violations for this car
         car.addViolation(violation);
         
         // Get ZipCode object and add violation to list of violations
         if (zipCodeTreeMap.containsKey(zipCode)) {
-            zipCodeTreeMap.get(zipCode).addViolation(violation);
+            ZipCode zc = zipCodeTreeMap.get(zipCode); 
+            zc.addViolation(violation);
         } else { // if unknown zip code
-            zipCodeTreeMap.get(-1).addViolation(violation);
+            ZipCode unknown = zipCodeTreeMap.get(-1); 
+            unknown.addViolation(violation);
         }
     }
 }

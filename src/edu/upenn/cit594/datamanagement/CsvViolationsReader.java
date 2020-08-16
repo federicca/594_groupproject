@@ -61,7 +61,8 @@ public class CsvViolationsReader extends ParentViolationsReader implements Viola
                     zipCode = Integer.parseInt(values[6]);
                 }
                 
-                transferData(timeStamp, fineDue, description, carID, carState, violationID, zipCode, zipCodeTreeMap, violations);
+                transferData(timeStamp, fineDue, description, carID, carState, violationID, zipCode, 
+                        zipCodeTreeMap, violations);
             }   
             br.close();
         } catch (IOException e) {

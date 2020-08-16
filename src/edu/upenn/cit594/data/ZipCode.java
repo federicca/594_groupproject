@@ -20,7 +20,7 @@ public class ZipCode {
     }
     
     public void addViolation(ParkingViolation v) {
-        this.parkingViolations.add(v);
+        parkingViolations.add(v);
     }
 
     public int getCode() {
