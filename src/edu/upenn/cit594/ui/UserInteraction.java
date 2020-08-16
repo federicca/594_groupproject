@@ -16,6 +16,7 @@ import edu.upenn.cit594.processor.TotalValuePC;
 public class UserInteraction {
     
     protected Processor processor;
+    protected Logger logger;
     
     /**
      * In N-tier architecture, UserInteraction has a dependency on Processor
@@ -23,6 +24,7 @@ public class UserInteraction {
      */
     public UserInteraction(Processor processor, Logger logger) {
         this.processor = processor;
+        this.logger = logger;
     }
     
     public void initUI (){
@@ -39,6 +41,7 @@ public class UserInteraction {
             int userOpt;
             int zipCode;
             while ((userOpt = sc.nextInt()) != 0) {
+                logger.logChoice(userOpt);
                 //1. Total Population for All ZIP Codes
                 if (userOpt == 1) {
                     
@@ -78,6 +81,8 @@ public class UserInteraction {
                 } else if (userOpt == 3) {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
+                        logger.logZipCode(zipCode);
+                        
                         Context context = new Context(new AverageMarketValue());
                         int avgMarketValue = processor.getAverageMarketValue(zipCode);
 //                        System.out.println(context.executeStrategy(zipCode, zipCodeTreeMap));
@@ -87,6 +92,8 @@ public class UserInteraction {
                 } else if (userOpt == 4) {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
+                        logger.logZipCode(zipCode);
+
                         Context context = new Context(new AverageLiveableArea());
                         int avgTotalLiveableArea = processor.getAverageMarketValue(zipCode);
 //                        System.out.println(context.executeStrategy(zipCode, zipCodeTreeMap));
@@ -97,6 +104,8 @@ public class UserInteraction {
                 } else if (userOpt == 5) {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
+                        logger.logZipCode(zipCode);
+
                         TotalValuePC valuePC = new TotalValuePC();
 //                        System.out.println(valuePC.getTotalValuePC(zipCode, zipCodeTreeMap));
                         int marketValuePC = processor.getTotalValuePC(zipCode);
