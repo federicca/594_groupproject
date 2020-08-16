@@ -14,6 +14,7 @@ import edu.upenn.cit594.datamanagement.JsonViolationsReader;
 import edu.upenn.cit594.datamanagement.PopulationReader;
 import edu.upenn.cit594.datamanagement.PropertiesReader;
 import edu.upenn.cit594.datamanagement.ViolationsReader;
+import edu.upenn.cit594.logging.Logger;
 
 public class Processor {
     
@@ -21,6 +22,7 @@ public class Processor {
     protected PropertiesReader propertiesReader;
     protected ViolationsReader violationsReader;
     protected String violationsFilename;
+    protected Logger logger;
     protected TreeMap<Integer, ZipCode> zipCodeTreeMap;
     
     /**
@@ -28,15 +30,19 @@ public class Processor {
      * @param format of Parking Violations file (csv or json)
      */
     public Processor(String format, String violationsFilename, String propertiesFilename,
-            String populationFilename) {
+            String populationFilename, Logger logger) {
+        
+        // set instance vars
+        this.violationsFilename = violationsFilename;
+        this.logger = logger;
         
         // instantiate readers
-        populationReader = new PopulationReader();
-        propertiesReader = new PropertiesReader();
+        populationReader = new PopulationReader(populationFilename);
+        propertiesReader = new PropertiesReader(propertiesFilename);
         violationsReader = createViolationsReader(format);
         
         // initialize data
-        initializeData(violationsFilename, propertiesFilename, populationFilename);
+        initializeData();
     }
     
     public TreeMap<Integer, ZipCode> getzipCodeTreeMap() {
@@ -50,11 +56,10 @@ public class Processor {
      * @param propertiesFilename
      * @param populationFilename
      */
-    private void initializeData(String violationsFilename, String propertiesFilename,
-            String populationFilename) {
-        // Create TreeMap
+    private void initializeData() {
+        // Create TreeMap and read in population
         try {
-            zipCodeTreeMap = populationReader.processPop(populationFilename);
+            zipCodeTreeMap = populationReader.processPop(logger);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -65,14 +70,14 @@ public class Processor {
         
         // Populate ArrayList fields of zipCode objects step 1: Properties
         try {
-            propertiesReader.processProperties(propertiesFilename, zipCodeTreeMap);
+            propertiesReader.processProperties(zipCodeTreeMap, logger);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
         // Populate ArrayList fields of zipCode objects step 2: Parking Violations
-        violationsReader.readViolationsIntoZipCode(violationsFilename, zipCodeTreeMap);
+        violationsReader.getAllViolations(zipCodeTreeMap, logger);
         
     }
     
@@ -84,9 +89,9 @@ public class Processor {
      */
     private ViolationsReader createViolationsReader(String format) {
         if (format.equals("csv")) {
-            return new CsvViolationsReader();
+            return new CsvViolationsReader(violationsFilename);
         } else if (format.equals("json")) {
-            return new JsonViolationsReader();
+            return new JsonViolationsReader(violationsFilename);
         } else {
             return null;
         }

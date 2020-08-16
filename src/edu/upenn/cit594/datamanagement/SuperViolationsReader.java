@@ -1,5 +1,7 @@
 package edu.upenn.cit594.datamanagement;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
@@ -7,8 +9,16 @@ import java.util.TreeMap;
 import edu.upenn.cit594.data.Car;
 import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.logging.Logger;
 
-public abstract class ParentViolationsReader {
+public abstract class SuperViolationsReader extends SuperReader {
+
+    // Date format for input files
+    protected static final DateFormat DF = new SimpleDateFormat("yyyy-mm-dd'T'kk:mm:ss'Z'");
+    
+    public SuperViolationsReader(String filename) {
+        super(filename);
+    }
     
     /**
      * Performs the common operation of creating the data objects and adding them to the list and treemap
@@ -22,7 +32,7 @@ public abstract class ParentViolationsReader {
      * @param zipCodeTreeMap
      * @param violations
      */
-    public void transferData(Date timeStamp, int fineDue, String description, int carID, String carState,
+    protected void transferData(Date timeStamp, int fineDue, String description, int carID, String carState,
             int violationID, int zipCode, TreeMap<Integer, ZipCode> zipCodeTreeMap, List<ParkingViolation> violations) {
         // Create car object
         Car car = new Car(carID, carState);
@@ -43,4 +53,5 @@ public abstract class ParentViolationsReader {
             unknown.addViolation(violation);
         }
     }
+    
 }

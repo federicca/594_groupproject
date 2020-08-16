@@ -5,9 +5,10 @@ import java.util.TreeMap;
 
 import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.logging.Logger;
 
 public interface ViolationsReader {
     
-    public List<ParkingViolation> readViolationsIntoZipCode(String filename, TreeMap<Integer, ZipCode> zipCodeTreeMap);
+    public List<ParkingViolation> getAllViolations(TreeMap<Integer, ZipCode> zipCodeTreeMap, Logger logger);
     
 }

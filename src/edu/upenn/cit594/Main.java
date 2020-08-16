@@ -28,7 +28,8 @@ public class Main {
         System.out.println("Please wait while we process the data...");
         
         // Create Processor object and initialize data
-        Processor processor = new Processor(violationsFormat, violationsFile, propertyValuesFile, populationFile);
+        Processor processor = new Processor(violationsFormat, violationsFile, propertyValuesFile,
+                populationFile, logger);
 
         UserInteraction ui = new UserInteraction(processor, logger);
         ui.initUI();

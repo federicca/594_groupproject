@@ -1,25 +1,35 @@
 package edu.upenn.cit594.datamanagement;
 
-import edu.upenn.cit594.data.ZipCode;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class PopulationReader{
-    TreeMap<Integer, ZipCode> zipCodeTreeMap = new TreeMap<>();
+import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.logging.Logger;
 
-    public TreeMap<Integer, ZipCode> processPop(String filename) throws IOException, ParseException {
+public class PopulationReader extends SuperReader {
+
+    TreeMap<Integer, ZipCode> zipCodeTreeMap = new TreeMap<>();
+    
+    public PopulationReader(String filename) {
+        super(filename);
+    }
+
+    public TreeMap<Integer, ZipCode> processPop(Logger logger) throws IOException, ParseException {
         //Delimiter used in CSV file
         String DELIMITER = " ";
         String row;
         BufferedReader br = null;
         try {
+            // open file for reading
             br = new BufferedReader(new FileReader(filename));
+            
+            // log opening of file
+            logOpenFile(logger);
+            
         } catch (FileNotFoundException e) {
             System.out.println("File doesn't exist or was not found");
         }

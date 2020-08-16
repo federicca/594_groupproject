@@ -1,7 +1,6 @@
 package edu.upenn.cit594.datamanagement;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -14,19 +13,29 @@ import java.util.TreeMap;
 
 import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.logging.Logger;
 
-public class CsvViolationsReader extends ParentViolationsReader implements ViolationsReader {
+public class CsvViolationsReader extends SuperViolationsReader implements ViolationsReader {
     
     // Date format for input file
     private static final DateFormat DF = new SimpleDateFormat("yyyy-mm-dd'T'kk:mm:ss'Z'");
 
+    public CsvViolationsReader(String filename) {
+        super(filename);
+    }
+
     @Override
-    public List<ParkingViolation> readViolationsIntoZipCode(String filename, TreeMap<Integer, ZipCode> zipCodeTreeMap) {
+    public List<ParkingViolation> getAllViolations(TreeMap<Integer, ZipCode> zipCodeTreeMap, Logger logger) {
         List<ParkingViolation> violations = new LinkedList<>();
         try {
+            // open file for reading
             BufferedReader br = new BufferedReader(new FileReader(filename));
-            String data;
             
+            // log opening of file
+            logOpenFile(logger);            
+
+            // read in data
+            String data;
             while ((data = br.readLine()) != null) {
                 String[] values = data.split(","); // splits each line into 6 or 7 fields
                 

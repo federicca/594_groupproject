@@ -1,15 +1,18 @@
 package edu.upenn.cit594.datamanagement;
 
-import edu.upenn.cit594.data.Property;
-import edu.upenn.cit594.data.ZipCode;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.TreeMap;
 
-public class PropertiesReader {
+import edu.upenn.cit594.data.Property;
+import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.logging.Logger;
+
+public class PropertiesReader extends SuperReader {
+
+
     int code = 0;
     double livableArea = 0;
     double marketValue = 0;
@@ -19,14 +22,23 @@ public class PropertiesReader {
     int totalLivableAreaPos = -1;
     int marketValuePos = -1;
     int buildingCodePos = -1;
+    
+    public PropertiesReader(String filename) {
+        super(filename);
+    }
 
-    public void processProperties(String filename, TreeMap<Integer, ZipCode> zipCodeTreeMap) throws IOException {
+    public void processProperties(TreeMap<Integer, ZipCode> zipCodeTreeMap, Logger logger) throws IOException {
         //Delimiter used in CSV file
         String DELIMITER = "(,)(?=(?:[^\"]|\"[^\"]*\")*$)";
         String row;
         BufferedReader br = null;
         try {
+            // open file for reading
             br = new BufferedReader(new FileReader(filename));
+            
+            // log opening of file
+            logOpenFile(logger);
+            
         } catch (FileNotFoundException e) {
             System.out.println("File doesn't exist or was not found");
         }

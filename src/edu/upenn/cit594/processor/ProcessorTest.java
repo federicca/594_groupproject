@@ -15,8 +15,7 @@ class ProcessorTest {
     
     @BeforeEach
     void setUp() {
-        p = new Processor("csv");
-        p.initializeData(violationsFilename, propertiesFilename, populationFilename);
+        p = new Processor("csv", violationsFilename, propertiesFilename, populationFilename, null);
     }
 
     @Test
