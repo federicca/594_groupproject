@@ -46,7 +46,7 @@ public class Main {
     
     /**
      * Private helper function to determine whether violations file format is legal
-     * @param format args[1]
+     * @param format args[1]6
      * @return
      */
     private static boolean isValidViolationsFormat(String format) {

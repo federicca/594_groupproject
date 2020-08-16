@@ -76,7 +76,7 @@ public class UserInteraction {
                                 System.out.printf("%d %.4f\n", zipInt, totalFinesPC);
                             }
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Divide by zero: Population = 0 for zipcode + " + zipInt);
+                            System.out.println("Divide by zero: Population = 0 for zipcode: " + zipInt);
                         }
 
                     }
@@ -122,7 +122,33 @@ public class UserInteraction {
 
                     // 6. Additional Feature
                 } else if (userOpt == 6) {
+                    TreeMap<Integer, ZipCode> zips = processor.getzipCodeTreeMap();
+                    
+                    // Pop first entry from treemap since it represents unknown zipcode
+                    Entry<Integer, ZipCode> first = null;
+                    if (zips.firstKey() == -1) {
+                        first = zips.pollFirstEntry();
+                    }
+                    for (Integer zipInt : zips.keySet()) {
+                        /**
+                         * print out zipcode followed by space followed by total fines to RMV ratio
+                         * (4 decimal places, truncated)
+                         */
+                        try{
+                            double ratioFinesToRMV = processor.getTotalFinesToRMVRatio(zipInt);
+                            if (ratioFinesToRMV > 0) {
+                                System.out.printf("%d %.4f\n", zipInt, ratioFinesToRMV);
+                            }
+                        } catch (IllegalArgumentException e) {
+                            // Do nothing
+//                            System.out.println("Divide by zero: Avg mkt val = 0 for zipcode: " + zipInt);
+                        }
 
+                    }
+                    // Add the first entry back to the TreeMap
+                    if (first != null) {
+                        zips.put(first.getKey(), first.getValue());
+                    }
                 } else {
                     System.out.println("That's not a valid option. Please try again.");
                     return;

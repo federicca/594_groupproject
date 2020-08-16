@@ -21,3 +21,13 @@ Current time: 1597609708674 File opened: src\\sample_files\\population.txt
 Current time: 1597609708677 File opened: src\\sample_files\\properties_small.csv
 Current time: 1597609713428 File opened: src\\sample_files\\parking.csv
 Current time: 1597609724676 User selected: 2
+1597613665178 csv src\\sample_files\\parking.csv src\\sample_files\\properties_small.csv src\\sample_files\\population.txt log.txt 
+1597613665220 File opened: src\\sample_files\\population.txt
+1597613665229 File opened: src\\sample_files\\properties_small.csv
+1597613671383 File opened: src\\sample_files\\parking.csv
+1597613731413 User selected: 6
+1597613903842 csv src\\sample_files\\parking.csv src\\sample_files\\properties_small.csv src\\sample_files\\population.txt log.txt 
+1597613903882 File opened: src\\sample_files\\population.txt
+1597613903885 File opened: src\\sample_files\\properties_small.csv
+1597613908910 File opened: src\\sample_files\\parking.csv
+1597613921060 User selected: 6

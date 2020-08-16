@@ -123,13 +123,8 @@ public class Processor {
         ZipCode zc = zipCodeTreeMap.get(zipCode);
         ArrayList<ParkingViolation> violations = zc.getParkingViolations();
         
-        // Calculate total fines
-        int totalFines = 0;
-        for (ParkingViolation violation : violations) {
-            if (violation.getCarState().equals("PA")) {
-                totalFines += violation.getFineDue();
-            }
-        }
+        // Calculate total fines using Strategy method
+        int totalFines = getTotalFines(violations, new PAComparator());
         
         // Get population
         int population = zc.getPopulation();
@@ -139,6 +134,23 @@ public class Processor {
         
         // Return total fines / population
         return (double) totalFines / population;
+    }
+    
+    /**
+     * Private helper method to get total fines, based on strategy
+     * @param violations
+     * @param comparator
+     * @return
+     */
+    private int getTotalFines(ArrayList<ParkingViolation> violations, StateComparator comparator) {
+        int totalFines = 0;
+        for (ParkingViolation violation : violations) {
+            String carState = violation.getCarState();
+            if(comparator.equals(carState)) {
+                totalFines += violation.getFineDue();
+            }
+        }
+        return totalFines;
     }
     
     /**
@@ -207,6 +219,28 @@ public class Processor {
         }
         marketValuePC = (int) (sumMarketValue / code.getPopulation());
         return marketValuePC;
+    }
+    
+    /**
+     * Q6: Additional Feature
+     * Calculates ratio of average fine to residential market value for a given zipcode
+     * @param zipCode
+     * @return ratio
+     */
+    public double getTotalFinesToRMVRatio(int zipCode) throws IllegalArgumentException {
+        ZipCode zc = zipCodeTreeMap.get(zipCode);
+        ArrayList<ParkingViolation> violations = zc.getParkingViolations();
+        
+        // Calculate total fines using Strategy method
+        int totalFines = getTotalFines(violations, new TrueComparator());
+        
+        // Calculate average residential market value using method from Q3
+        int avgMktVal = getAverageMarketValue(zipCode);
+        if (avgMktVal == 0) {
+            throw new IllegalArgumentException();
+        }
+        
+        return (double) totalFines / avgMktVal;
     }
     
     
