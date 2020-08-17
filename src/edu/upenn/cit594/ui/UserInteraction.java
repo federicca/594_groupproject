@@ -150,7 +150,7 @@ public class UserInteraction {
                         zips.put(first.getKey(), first.getValue());
                     }
                 } else if (userOpt == 7) {
-                    System.out.println("Enter a 7-digit car ID to get Parking Violations (example: 1199878)");
+                    System.out.println("Enter a 7-digit car ID to get Parking Violations (example: 1687997)");
                     int userInput;
                     if ((userInput = sc.nextInt()) != 0) {
                         HashMap<Integer, Car> cars = SuperViolationsReader.getCars();
