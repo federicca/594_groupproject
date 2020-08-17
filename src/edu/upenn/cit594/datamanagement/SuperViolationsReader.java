@@ -1,15 +1,15 @@
 package edu.upenn.cit594.datamanagement;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.TreeMap;
-
 import edu.upenn.cit594.data.Car;
 import edu.upenn.cit594.data.ParkingViolation;
 import edu.upenn.cit594.data.ZipCode;
-import edu.upenn.cit594.logging.Logger;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeMap;
 
 public abstract class SuperViolationsReader extends SuperReader {
 
@@ -19,7 +19,7 @@ public abstract class SuperViolationsReader extends SuperReader {
     public SuperViolationsReader(String filename) {
         super(filename);
     }
-    
+    private static HashMap<Integer, Car> cars = new HashMap<>();
     /**
      * Performs the common operation of creating the data objects and adding them to the list and treemap
      * @param timeStamp
@@ -34,15 +34,20 @@ public abstract class SuperViolationsReader extends SuperReader {
      */
     protected void transferData(Date timeStamp, int fineDue, String description, int carID, String carState,
             int violationID, int zipCode, TreeMap<Integer, ZipCode> zipCodeTreeMap, List<ParkingViolation> violations) {
+
         // Create car object
         Car car = new Car(carID, carState);
-        
         // Create ParkingViolation object
         ParkingViolation violation = new ParkingViolation(timeStamp, fineDue, description, carID, carState, violationID, zipCode);
         violations.add(violation);
-        
-        // Add this violation to the HS of violations for this car
-        car.addViolation(violation);
+        // Check if car exists in list
+        if (cars.containsKey(car.getId())){
+            cars.get(car.getId()).addViolation(violation);
+        }else{
+            // Add this violation to the HS of violations for this car
+            car.addViolation(violation);
+            cars.put(car.getId(), car);
+        }
         
         // Get ZipCode object and add violation to list of violations
         if (zipCodeTreeMap.containsKey(zipCode)) {
@@ -52,6 +57,10 @@ public abstract class SuperViolationsReader extends SuperReader {
             ZipCode unknown = zipCodeTreeMap.get(-1); 
             unknown.addViolation(violation);
         }
+    }
+
+    public static HashMap<Integer, Car> getCars() {
+        return cars;
     }
     
 }

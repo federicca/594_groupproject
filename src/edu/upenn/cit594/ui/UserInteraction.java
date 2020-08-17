@@ -1,17 +1,16 @@
 package edu.upenn.cit594.ui;
 
+import edu.upenn.cit594.data.Car;
+import edu.upenn.cit594.data.ZipCode;
+import edu.upenn.cit594.datamanagement.SuperViolationsReader;
+import edu.upenn.cit594.logging.Logger;
+import edu.upenn.cit594.processor.*;
+
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.TreeMap;
-
-import edu.upenn.cit594.data.ZipCode;
-import edu.upenn.cit594.logging.Logger;
-import edu.upenn.cit594.processor.AverageLiveableArea;
-import edu.upenn.cit594.processor.AverageMarketValue;
-import edu.upenn.cit594.processor.Context;
-import edu.upenn.cit594.processor.Processor;
-import edu.upenn.cit594.processor.TotalValuePC;
 
 public class UserInteraction {
     
@@ -35,7 +34,8 @@ public class UserInteraction {
                 "3. Average Market Value\n" +
                 "4. Average Total Livable Area\n" +
                 "5. Total Residential Market Value Per Capita\n" +
-                "6. Custom Feature\n";
+                "6. Custom Feature\n" +
+                "7. Get Car Parking Violations\n";
         try{
             Scanner sc = new Scanner(System.in);
             System.out.print("Welcome User!" + promptOpt);
@@ -149,7 +149,14 @@ public class UserInteraction {
                     if (first != null) {
                         zips.put(first.getKey(), first.getValue());
                     }
-                } else {
+                } else if (userOpt == 7) {
+                    System.out.println("Enter a 7-digit car ID to get Parking Violations (example: 1199878)");
+                    int userInput;
+                    if ((userInput = sc.nextInt()) != 0) {
+                        HashMap<Integer, Car> cars = SuperViolationsReader.getCars();
+                        processor.getViolations(userInput, cars);
+                    }
+                }else {
                     System.out.println("That's not a valid option. Please try again.");
                     return;
                 }
