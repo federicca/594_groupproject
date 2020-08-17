@@ -6,7 +6,7 @@
 We have created 2 additional features. We focused on identifying areas of the data that hadn't been explored in order to showcase another dimension of the project.
 
 #### Lookup parking violations for a specific car
-The user will input a car id, and the program will return a description of all parking violations and total fines due for that car. In order to make this feature more efficient cars were not only added to the ParkingViolation object and subsequently to the ZipCode, but were also added to a TreeSet of Car elements, that are sorted by CarID. This allows for a more efficient iteration when searching for a specific Car.
+The user will input a car id, and the program will return a description of all parking violations and total fines due for that car. In order to make this feature more efficient cars were not only added to the ParkingViolation object and subsequently to the ZipCode, but were also added to a HashSet of Car elements. This allows for a more efficient iteration when searching for a specific Car, with O(1) complexity.
 
 
 ## Data Structures
