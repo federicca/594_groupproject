@@ -119,22 +119,27 @@ public class Processor {
      * @param zipCode
      * @return fines per capita
      */
+    HashMap<Integer, Double> memFinesPC;
     public double getTotalFinesPerCapita(int zipCode) throws IllegalArgumentException {
+        if (memFinesPC.containsKey(zipCode)) {
+            return memFinesPC.get(zipCode);
+        } else {
+            ZipCode zc = zipCodeTreeMap.get(zipCode);
+            ArrayList<ParkingViolation> violations = zc.getParkingViolations();
 
-        ZipCode zc = zipCodeTreeMap.get(zipCode);
-        ArrayList<ParkingViolation> violations = zc.getParkingViolations();
+            // Calculate total fines using Strategy method
+            int totalFines = getTotalFines(violations, new PAComparator());
 
-        // Calculate total fines using Strategy method
-        int totalFines = getTotalFines(violations, new PAComparator());
+            // Get population
+            int population = zc.getPopulation();
+            if (population == 0) {
+                throw new IllegalArgumentException();
+            }
 
-        // Get population
-        int population = zc.getPopulation();
-        if (population == 0) {
-            throw new IllegalArgumentException();
+            // Return total fines / population
+            return (double) totalFines / population;
         }
 
-        // Return total fines / population
-        return (double) totalFines / population;
     }
 
     /**
@@ -249,7 +254,11 @@ public class Processor {
      * @param zipCode
      * @return ratio
      */
+    HashMap<Integer, Double> memFinesToRMVRatio;
     public double getTotalFinesToRMVRatio(int zipCode) throws IllegalArgumentException {
+        if (memFinesToRMVRatio.containsKey(zipCode)) {
+            return memFinesToRMVRatio.get(zipCode);
+        }
         ZipCode zc = zipCodeTreeMap.get(zipCode);
         ArrayList<ParkingViolation> violations = zc.getParkingViolations();
 
