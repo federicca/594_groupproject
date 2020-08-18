@@ -42,34 +42,55 @@ public class CsvViolationsReader extends SuperViolationsReader implements Violat
                 // Field 0: dateString -> timeStamp (parse Date)
                 String dateString = values[0];
                 Date timeStamp = null;
-                try {
-                    timeStamp = DF.parse(dateString);
-                } catch (ParseException e) {
-                    System.out.println("unable to parse date from string for dateString = " + dateString);
-                    e.printStackTrace();
+                if (!dateString.equals("")) {
+                    try {
+                        timeStamp = DF.parse(dateString);
+                    } catch (ParseException e) {
+                        System.out.println("unable to parse date from string for dateString = " + dateString);
+                        e.printStackTrace();
+                    }
                 }
                 
-                // Field 1: fineDue (parse Integer)
-                int fineDue = Integer.parseInt(values[1]);
                 
+                // Field 1: fineDue (parse Integer)
+                int fineDue = 0;
+                try {
+                    fineDue = Integer.parseInt(values[1]);
+                } catch (NumberFormatException ignore) {
+                    // do nothing
+                }
+
                 // Field 2: description
                 String description = values[2];
                 
                 // Field 3: carID (parse Integer)
-                int carID = Integer.parseInt(values[3]);
+                int carID = 0;
+                try {
+                    carID = Integer.parseInt(values[3]);
+                } catch (NumberFormatException ignore) {
+                    // do nothing
+                }
                 
                 // Field 4: carState
                 String carState = values[4];
                 
                 // Field 5: violationID (parse Integer)
-                int violationID = Integer.parseInt(values[5]);
+                int violationID = 0;
+                try {
+                    violationID = Integer.parseInt(values[5]);
+                } catch (NumberFormatException ignore) {
+                    // do nothing
+                }
                 
                 // Field 6 (if it exists): zipCode (parse Integer)
                 int zipCode = 0;
                 if (values.length == 7) {
-                    zipCode = Integer.parseInt(values[6]);
-                }
-                
+                    try {
+                        zipCode = Integer.parseInt(values[6]);
+                    } catch (NumberFormatException ignore) {
+                        // do nothing
+                    }
+                }                
                 transferData(timeStamp, fineDue, description, carID, carState, violationID, zipCode, 
                         zipCodeTreeMap, violations);
             }   

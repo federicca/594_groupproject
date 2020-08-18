@@ -45,29 +45,48 @@ public class JsonViolationsReader extends SuperViolationsReader implements Viola
                 // get timeStamp
                 String dateString = (String) jsonViolation.get("date");
                 Date timeStamp = null;
-                try {
-                    timeStamp = DF.parse(dateString);
-                } catch (java.text.ParseException e) {
-                    e.printStackTrace();
+
+                if (!dateString.equals("")) {
+                    try {
+                        timeStamp = DF.parse(dateString);
+                    } catch (java.text.ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
-                
+
                 // get fineDue
-                long fineDueLong = (long) jsonViolation.get("fine");
-                int fineDue = (int) fineDueLong;
+                int fineDue = 0;
+                try {
+                    long fineDueLong = (long) jsonViolation.get("fine");
+                    fineDue = (int) fineDueLong;
+                } catch (NumberFormatException ignore) {
+                    // do nothing
+                }
+
                 
                 // get description
                 String description = (String) jsonViolation.get("violation");
                 
                 // get carID
                 String carIDString = (String) jsonViolation.get("plate_id");
-                int carID = Integer.parseInt(carIDString);
+                int carID = 0;
+                try {
+                    carID = Integer.parseInt(carIDString);
+                } catch (NumberFormatException ignore) {
+                    // do nothing
+                }
                 
                 // get carState
                 String carState = (String) jsonViolation.get("state");
                 
                 // get violationID
-                long violationIDLong = (long) jsonViolation.get("ticket_number");
-                int violationID = (int) violationIDLong;
+                int violationID = 0;
+                try {
+                    long violationIDLong = (long) jsonViolation.get("ticket_number");
+                    violationID = (int) violationIDLong;
+                } catch (NumberFormatException ignore) {
+                    // do nothing
+                }
                 
                 // get zipCode
                 String zipString = (String) jsonViolation.get("zip_code");
