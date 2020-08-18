@@ -305,6 +305,7 @@ public class Processor {
 
                     System.out.println(total);
                     outputs.add(total.toString());
+                    memCarViolations.put(input, outputs);
                 }
             } else {
                 System.out.println("Invalid Car ID");
