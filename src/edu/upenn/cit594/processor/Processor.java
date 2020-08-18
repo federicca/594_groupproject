@@ -118,7 +118,7 @@ public class Processor {
             return memFinesPC.get(zipCode);
         } else {
             ZipCode zc = zipCodeTreeMap.get(zipCode);
-            ArrayList<ParkingViolation> violations = zc.getParkingViolations();
+            HashSet<ParkingViolation> violations = zc.getParkingViolations();
 
             // Calculate total fines using Strategy method
             int totalFines = getTotalFines(violations, new PAComparator());
@@ -141,7 +141,7 @@ public class Processor {
      * @param comparator
      * @return
      */
-    private int getTotalFines(ArrayList<ParkingViolation> violations, StateComparator comparator) {
+    private int getTotalFines(HashSet<ParkingViolation> violations, StateComparator comparator) {
         int totalFines = 0;
         for (ParkingViolation violation : violations) {
             String carState = violation.getCarState();
@@ -253,7 +253,7 @@ public class Processor {
             return memFinesToRMVRatio.get(zipCode);
         }
         ZipCode zc = zipCodeTreeMap.get(zipCode);
-        ArrayList<ParkingViolation> violations = zc.getParkingViolations();
+        HashSet<ParkingViolation> violations = zc.getParkingViolations();
 
         // Calculate total fines using Strategy method
         int totalFines = getTotalFines(violations, new TrueComparator());

@@ -1,18 +1,19 @@
 package edu.upenn.cit594.data;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class ZipCode {
     private int code;
     private int population;
-    private ArrayList<Property> properties;
-    private ArrayList<ParkingViolation> parkingViolations;
+    private HashSet<Property> properties;
+    private HashSet<ParkingViolation> parkingViolations;
 
     public ZipCode(int code, int population){
         this.code = code;
         this.population = population;
-        properties = new ArrayList<>();
-        parkingViolations = new ArrayList<>();
+        properties = new HashSet<>();
+        parkingViolations = new HashSet<>();
     }
 
     public void addProperty(Property prop){
@@ -39,19 +40,19 @@ public class ZipCode {
         this.population = population;
     }
 
-    public ArrayList<Property> getProperties() {
+    public HashSet<Property> getProperties() {
         return properties;
     }
 
-    public void setProperties(ArrayList<Property> properties) {
+    public void setProperties(HashSet<Property> properties) {
         this.properties = properties;
     }
 
-    public ArrayList<ParkingViolation> getParkingViolations() {
+    public HashSet<ParkingViolation> getParkingViolations() {
         return parkingViolations;
     }
 
-    public void setParkingViolations(ArrayList<ParkingViolation> parkingViolations) {
+    public void setParkingViolations(HashSet<ParkingViolation> parkingViolations) {
         this.parkingViolations = parkingViolations;
     }
 }
