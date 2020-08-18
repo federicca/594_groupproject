@@ -78,7 +78,6 @@ public class UserInteraction {
                         } catch (IllegalArgumentException e) {
                             System.out.println("Divide by zero: Population = 0 for zipcode: " + zipInt);
                         }
-
                     }
                     // Add the first entry back to the TreeMap
                     if (first != null) {
@@ -90,10 +89,7 @@ public class UserInteraction {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
                         logger.logZipCode(zipCode);
-                        
-                        Context context = new Context(new AverageMarketValue());
                         int avgMarketValue = processor.getAverageMarketValue(zipCode);
-//                        System.out.println(context.executeStrategy(zipCode, zipCodeTreeMap));
                         System.out.println(avgMarketValue);
                     }
                     // 4. Average Total Livable Area
@@ -101,11 +97,8 @@ public class UserInteraction {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
                         logger.logZipCode(zipCode);
-
-                        Context context = new Context(new AverageLiveableArea());
-                        int avgTotalLiveableArea = processor.getAverageMarketValue(zipCode);
-//                        System.out.println(context.executeStrategy(zipCode, zipCodeTreeMap));
-                        System.out.println(avgTotalLiveableArea);
+                        int avgTotalLivableArea = processor.getAverageLivableArea(zipCode);
+                        System.out.println(avgTotalLivableArea);
                     }
 
                     // Total Residential Market Value Per Capita
@@ -113,9 +106,6 @@ public class UserInteraction {
                     System.out.println("Enter a 5-digit ZipCode or 0 to go back to options");
                     if ((zipCode = sc.nextInt()) != 0) {
                         logger.logZipCode(zipCode);
-
-                        TotalValuePC valuePC = new TotalValuePC();
-//                        System.out.println(valuePC.getTotalValuePC(zipCode, zipCodeTreeMap));
                         int marketValuePC = processor.getTotalValuePC(zipCode);
                         System.out.println(marketValuePC);
                     }

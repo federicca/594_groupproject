@@ -97,12 +97,18 @@ public class Processor {
      * Calculates the total population of all the combined zipcodes in the dataset
      * @return total population
      */
+    int memPop = 0; //memoization por getTotalPop
     public int getTotalPop () {
-        int totalPop = 0;
-        for (Map.Entry<Integer, ZipCode> entry : zipCodeTreeMap.entrySet()) {
-            totalPop += entry.getValue().getPopulation();
+        if (memPop == 0) {
+            int totalPop = 0;
+            for (Map.Entry<Integer, ZipCode> entry : zipCodeTreeMap.entrySet()) {
+                totalPop += entry.getValue().getPopulation();
+            }
+            memPop = totalPop;
+            return totalPop;
+        }else{
+            return memPop;
         }
-        return totalPop;
     }
 
     /**
@@ -155,20 +161,28 @@ public class Processor {
      * @param zipCode input by user
      * @return average market value
      */
-    public int getAverageMarketValue (int zipCode) {
-        double sumMarketValue = 0;
-        int averageMarketValue = 0;
-        if (zipCodeTreeMap.containsKey(zipCode)) {
-            ZipCode code = zipCodeTreeMap.get(zipCode);
-            for (Property property : code.getProperties()) {
-                sumMarketValue += property.getMarketValue();
-            }
-            averageMarketValue = (int) (sumMarketValue / code.getProperties().size());
 
-        } else {
-            System.out.println("No data available or invalid ZipCode");
+    HashMap<Integer, Integer> memValue = new HashMap<>(); //Memoization for Average Market value
+    public int getAverageMarketValue (int zipCode) {
+        if (memValue.containsKey(zipCode)){
+            return memValue.get(zipCode);
+        }else {
+            double sumMarketValue = 0;
+            int averageMarketValue = 0;
+            if (zipCodeTreeMap.containsKey(zipCode)) {
+                ZipCode code = zipCodeTreeMap.get(zipCode);
+                for (Property property : code.getProperties()) {
+                    sumMarketValue += property.getMarketValue();
+                }
+                GetAverage average = new GetAverage(); // Implement Strategy
+                averageMarketValue = average.getAverage(sumMarketValue, code.getProperties().size());
+
+            } else {
+                System.out.println("No data available or invalid ZipCode");
+            }
+            memValue.put(zipCode, averageMarketValue);
+            return averageMarketValue;
         }
-        return averageMarketValue;
     }
 
     /**
@@ -178,19 +192,26 @@ public class Processor {
      * @param zipCode
      * @return average liveable area
      */
-    public int getAverageLiveableArea(int zipCode) {
-        double sumLivableArea = 0;
-        int averageLivableArea = 0;
-        if(zipCodeTreeMap.containsKey(zipCode)) {
-            ZipCode code = zipCodeTreeMap.get(zipCode);
-            for (Property property : code.getProperties()) {
-                sumLivableArea += property.getLivableArea();
+    HashMap<Integer, Integer> memArea = new HashMap<>(); //Memoization
+    public int getAverageLivableArea(int zipCode) {
+        if (memArea.containsKey(zipCode)){
+            return memArea.get(zipCode);
+        }else {
+            double sumLivableArea = 0;
+            int averageLivableArea = 0;
+            if (zipCodeTreeMap.containsKey(zipCode)) {
+                ZipCode code = zipCodeTreeMap.get(zipCode);
+                for (Property property : code.getProperties()) {
+                    sumLivableArea += property.getLivableArea();
+                }
+                GetAverage average = new GetAverage(); // Implement Strategy
+                averageLivableArea = average.getAverage(sumLivableArea, code.getProperties().size());
+            } else {
+                System.out.println("No data available or invalid ZipCode");
             }
-            averageLivableArea = (int) (sumLivableArea / code.getProperties().size());
-        }else{
-            System.out.println("No data available or invalid ZipCode");
+            memArea.put(zipCode, averageLivableArea);
+            return averageLivableArea;
         }
-        return averageLivableArea;
     }
 
     /**
@@ -199,21 +220,27 @@ public class Processor {
      * @param zipCode
      * @return total RMV per capita
      */
+    HashMap<Integer, Integer> memValuePC = new HashMap<>(); //Memoization
     public int getTotalValuePC(int zipCode){
-        double sumMarketValue = 0;
-        int marketValuePC = 0;
-        if(!zipCodeTreeMap.containsKey(zipCode)){
-            return 0;
+        if (memValuePC.containsKey(zipCode)){
+            return memValuePC.get(zipCode);
+        }else {
+            double sumMarketValue = 0;
+            int marketValuePC = 0;
+            if (!zipCodeTreeMap.containsKey(zipCode)) {
+                return 0;
+            }
+            ZipCode code = zipCodeTreeMap.get(zipCode);
+            for (Property property : code.getProperties()) {
+                sumMarketValue += property.getMarketValue();
+            }
+            if (sumMarketValue == 0 || code.getPopulation() == 0) {
+                return 0;
+            }
+            marketValuePC = (int) (sumMarketValue / code.getPopulation());
+            memValuePC.put(zipCode, marketValuePC);
+            return marketValuePC;
         }
-        ZipCode code = zipCodeTreeMap.get(zipCode);
-        for (Property property : code.getProperties()){
-            sumMarketValue += property.getMarketValue();
-        }
-        if(sumMarketValue == 0 || code.getPopulation() == 0){
-            return 0;
-        }
-        marketValuePC = (int) (sumMarketValue / code.getPopulation());
-        return marketValuePC;
     }
 
     /**
@@ -238,26 +265,50 @@ public class Processor {
         return (double) totalFines / avgMktVal;
     }
 
-
-    public void getViolations(int input, HashMap<Integer, Car> cars){
-        int i = 1;
-        int totalDue = 0;
-        if(cars.containsKey(input)){
-            if(cars.get(input).getViolations().isEmpty()){
-                System.out.println("Car has no Parking Violations");
-            }else {
-                HashSet<ParkingViolation> violations = cars.get(input).getViolations();
-                for (ParkingViolation violation : violations) {
-                    System.out.println(i + ". " + "Timestamp: " + violation.getTimeStamp().toString() + " ViolationID: "
-                            + violation.getViolationID() + " Description: " + violation.getDescription()
-                            + " Fine due: $" + violation.getFineDue());
-                    i++;
-                    totalDue += violation.getFineDue();
-                }
-                System.out.println("\nTotal due for car ID " + input + ": $" + totalDue);
+    HashMap<Integer, ArrayList<String>> memCarViolations = new HashMap<>(); //Memoization
+    public void getViolations(int input, HashMap<Integer, Car> cars) {
+        if (memCarViolations.containsKey(input)) {
+            for (String string : memCarViolations.get(input)) {
+                System.out.println(string);
             }
-        }else {
-            System.out.println("Invalid Car ID");
+        } else {
+            int i = 1;
+            int totalDue = 0;
+            ArrayList<String> outputs = new ArrayList<>();
+            if (cars.containsKey(input)) {
+                if (cars.get(input).getViolations().isEmpty()) {
+                    System.out.println("Car has no Parking Violations");
+                } else {
+                    HashSet<ParkingViolation> violations = cars.get(input).getViolations();
+                    for (ParkingViolation violation : violations) {
+                        StringBuilder str = new StringBuilder();
+                        str.append(i);
+                        str.append(". TimeStamp: ");
+                        str.append(violation.getTimeStamp().toString());
+                        str.append(" Violation ID: ");
+                        str.append(violation.getViolationID());
+                        str.append(" Description: ");
+                        str.append(violation.getDescription());
+                        str.append(" Fine due: $");
+                        str.append(violation.getFineDue());
+
+                        i++;
+                        totalDue += violation.getFineDue();
+                        System.out.println(str);
+                        outputs.add(str.toString());
+                    }
+                    StringBuilder total = new StringBuilder();
+                    total.append("\nTotal due for car ID ");
+                    total.append(input);
+                    total.append(": $");
+                    total.append(totalDue);
+
+                    System.out.println(total);
+                    outputs.add(total.toString());
+                }
+            } else {
+                System.out.println("Invalid Car ID");
+            }
         }
     }
 
