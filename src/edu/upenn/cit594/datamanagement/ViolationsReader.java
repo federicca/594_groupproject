@@ -9,6 +9,6 @@ import edu.upenn.cit594.logging.Logger;
 
 public interface ViolationsReader {
     
-    public List<ParkingViolation> getAllViolations(TreeMap<Integer, ZipCode> zipCodeTreeMap, Logger logger);
+    public List<ParkingViolation> getAllViolations(TreeMap<Integer, ZipCode> zipCodeTreeMap);
     
 }

@@ -21,12 +21,12 @@ import edu.upenn.cit594.logging.Logger;
 
 public class JsonViolationsReader extends SuperViolationsReader implements ViolationsReader {
     
-    public JsonViolationsReader(String filename) {
-        super(filename);
+    public JsonViolationsReader(String filename, Logger logger) {
+        super(filename, logger);
     }
 
     @Override
-    public List<ParkingViolation> getAllViolations(TreeMap<Integer, ZipCode> zipCodeTreeMap, Logger logger) {
+    public List<ParkingViolation> getAllViolations(TreeMap<Integer, ZipCode> zipCodeTreeMap) {
         List<ParkingViolation> violations = new LinkedList<>();
         
         JSONParser parser = new JSONParser();
@@ -35,7 +35,7 @@ public class JsonViolationsReader extends SuperViolationsReader implements Viola
             JSONArray data = (JSONArray)parser.parse(new FileReader(filename));
             
             // log file open
-            logOpenFile(logger);
+            logOpenFile();
             
             // collect data
             Iterator iter = data.iterator();

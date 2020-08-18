@@ -23,11 +23,11 @@ public class PropertiesReader extends SuperReader {
     int marketValuePos = -1;
     int buildingCodePos = -1;
     
-    public PropertiesReader(String filename) {
-        super(filename);
+    public PropertiesReader(String filename, Logger logger) {
+        super(filename, logger);
     }
 
-    public void processProperties(TreeMap<Integer, ZipCode> zipCodeTreeMap, Logger logger) throws IOException {
+    public void processProperties(TreeMap<Integer, ZipCode> zipCodeTreeMap) throws IOException {
         //Delimiter used in CSV file
         String DELIMITER = "(,)(?=(?:[^\"]|\"[^\"]*\")*$)";
         String row;
@@ -37,7 +37,7 @@ public class PropertiesReader extends SuperReader {
             br = new BufferedReader(new FileReader(filename));
             
             // log opening of file
-            logOpenFile(logger);
+            logOpenFile();
             
         } catch (FileNotFoundException e) {
             System.out.println("File doesn't exist or was not found");

@@ -13,12 +13,13 @@ import edu.upenn.cit594.logging.Logger;
 public class PopulationReader extends SuperReader {
 
     TreeMap<Integer, ZipCode> zipCodeTreeMap = new TreeMap<>();
+    Logger logger;
     
-    public PopulationReader(String filename) {
-        super(filename);
+    public PopulationReader(String filename, Logger logger) {
+        super(filename, logger);
     }
 
-    public TreeMap<Integer, ZipCode> processPop(Logger logger) throws IOException, ParseException {
+    public TreeMap<Integer, ZipCode> processPop() throws IOException, ParseException {
         //Delimiter used in CSV file
         String DELIMITER = " ";
         String row;
@@ -28,7 +29,7 @@ public class PopulationReader extends SuperReader {
             br = new BufferedReader(new FileReader(filename));
             
             // log opening of file
-            logOpenFile(logger);
+            logOpenFile();
             
         } catch (FileNotFoundException e) {
             System.out.println("File doesn't exist or was not found");

@@ -20,19 +20,19 @@ public class CsvViolationsReader extends SuperViolationsReader implements Violat
     // Date format for input file
     private static final DateFormat DF = new SimpleDateFormat("yyyy-mm-dd'T'kk:mm:ss'Z'");
 
-    public CsvViolationsReader(String filename) {
-        super(filename);
+    public CsvViolationsReader(String filename, Logger logger) {
+        super(filename, logger);
     }
 
     @Override
-    public List<ParkingViolation> getAllViolations(TreeMap<Integer, ZipCode> zipCodeTreeMap, Logger logger) {
+    public List<ParkingViolation> getAllViolations(TreeMap<Integer, ZipCode> zipCodeTreeMap) {
         List<ParkingViolation> violations = new LinkedList<>();
         try {
             // open file for reading
             BufferedReader br = new BufferedReader(new FileReader(filename));
             
             // log opening of file
-            logOpenFile(logger);            
+            logOpenFile();            
 
             // read in data
             String data;

@@ -1,11 +1,11 @@
 package edu.upenn.cit594;
 
+import edu.upenn.cit594.datamanagement.PopulationReader;
+import edu.upenn.cit594.datamanagement.PropertiesReader;
+import edu.upenn.cit594.datamanagement.ViolationsReader;
 import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.Processor;
 import edu.upenn.cit594.ui.UserInteraction;
-
-import java.io.IOException;
-import java.text.ParseException;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,12 +33,16 @@ public class Main {
         logger.createWriter();
         logger.logProgStart(args);
 
-        System.out.println("Please wait while we process the data...");
+        // Create Reader objects
+        ViolationsReader violationsReader = Processor.createViolationsReader(violationsFormat, violationsFile, logger);
+        PropertiesReader propertiesReader = new PropertiesReader(propertyValuesFile, logger);
+        PopulationReader populationReader = new PopulationReader(populationFile, logger);
         
         // Create Processor object and initialize data
-        Processor processor = new Processor(violationsFormat, violationsFile, propertyValuesFile,
-                populationFile, logger);
+        System.out.println("Please wait while we process the data...");
+        Processor processor = new Processor(violationsReader, propertiesReader, populationReader);
 
+        // Create UI object and run UI
         UserInteraction ui = new UserInteraction(processor, logger);
         ui.initUI();
 

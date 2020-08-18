@@ -32,9 +32,9 @@ class ViolationsReaderTest {
     
     @BeforeEach
     void setUp() {
-        PopulationReader pr = new PopulationReader(popFilename);
+        PopulationReader pr = new PopulationReader(popFilename, null);
         try {
-            zipCodeTreeMap = pr.processPop(null);
+            zipCodeTreeMap = pr.processPop();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -46,8 +46,8 @@ class ViolationsReaderTest {
     
     @Test
     void testGetAllViolationsCsv() {
-        cvr = new CsvViolationsReader(csvFilename);
-        List<ParkingViolation> violations = cvr.getAllViolations(zipCodeTreeMap, null);
+        cvr = new CsvViolationsReader(csvFilename, null);
+        List<ParkingViolation> violations = cvr.getAllViolations(zipCodeTreeMap);
         ParkingViolation result0 = violations.get(0);
         ParkingViolation result31 = violations.get(31);
         ParkingViolation result25558 = violations.get(25558);
@@ -109,8 +109,8 @@ class ViolationsReaderTest {
     
     @Test
     void testGetAllViolationsJson() {
-        jvr = new JsonViolationsReader(jsonFilename);
-        List<ParkingViolation> violations = jvr.getAllViolations(zipCodeTreeMap, null);
+        jvr = new JsonViolationsReader(jsonFilename, null);
+        List<ParkingViolation> violations = jvr.getAllViolations(zipCodeTreeMap);
         ParkingViolation result0 = violations.get(0);
         ParkingViolation result31 = violations.get(31);
         ParkingViolation result25558 = violations.get(25558);

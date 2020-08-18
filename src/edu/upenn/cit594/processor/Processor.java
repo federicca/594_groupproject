@@ -13,28 +13,24 @@ import java.util.*;
 
 public class Processor {
 
-    protected PopulationReader populationReader;
-    protected PropertiesReader propertiesReader;
     protected ViolationsReader violationsReader;
-    protected String violationsFilename;
+    protected PropertiesReader propertiesReader;
+    protected PopulationReader populationReader;
     protected Logger logger;
     protected TreeMap<Integer, ZipCode> zipCodeTreeMap;
 
     /**
      * Creates all required reader objects in constructor
-     * @param format of Parking Violations file (csv or json)
+     * @param vr ViolationsReader
+     * @param prr PropertiesReader
+     * @param por PopulationReaders
      */
-    public Processor(String format, String violationsFilename, String propertiesFilename,
-            String populationFilename, Logger logger) {
-
+    public Processor(ViolationsReader vr, PropertiesReader prr, PopulationReader por) {
+        
         // set instance vars
-        this.violationsFilename = violationsFilename;
-        this.logger = logger;
-
-        // instantiate readers
-        populationReader = new PopulationReader(populationFilename);
-        propertiesReader = new PropertiesReader(propertiesFilename);
-        violationsReader = createViolationsReader(format);
+        violationsReader = vr;
+        propertiesReader = prr;
+        populationReader = por;
 
         // initialize data
         initializeData();
@@ -47,14 +43,11 @@ public class Processor {
     /**
      * Instantiates the TreeMap and populates ArrayList fields of ZipCode objects
      * for data analysis
-     * @param violationsFilename
-     * @param propertiesFilename
-     * @param populationFilename
      */
     private void initializeData() {
         // Create TreeMap and read in population
         try {
-            zipCodeTreeMap = populationReader.processPop(logger);
+            zipCodeTreeMap = populationReader.processPop();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -65,14 +58,14 @@ public class Processor {
 
         // Populate ArrayList fields of zipCode objects step 1: Properties
         try {
-            propertiesReader.processProperties(zipCodeTreeMap, logger);
+            propertiesReader.processProperties(zipCodeTreeMap);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         // Populate ArrayList fields of zipCode objects step 2: Parking Violations
-        violationsReader.getAllViolations(zipCodeTreeMap, logger);
+        violationsReader.getAllViolations(zipCodeTreeMap);
 
     }
 
@@ -82,11 +75,11 @@ public class Processor {
      * @param format passed by args[0] in main
      * @return
      */
-    private ViolationsReader createViolationsReader(String format) {
+    public static ViolationsReader createViolationsReader(String format, String violationsFilename, Logger logger) {
         if (format.equals("csv")) {
-            return new CsvViolationsReader(violationsFilename);
+            return new CsvViolationsReader(violationsFilename, logger);
         } else if (format.equals("json")) {
-            return new JsonViolationsReader(violationsFilename);
+            return new JsonViolationsReader(violationsFilename, logger);
         } else {
             return null;
         }
@@ -97,7 +90,7 @@ public class Processor {
      * Calculates the total population of all the combined zipcodes in the dataset
      * @return total population
      */
-    int memPop = 0; //memoization por getTotalPop
+    private int memPop = 0; //memoization por getTotalPop
     public int getTotalPop () {
         if (memPop == 0) {
             int totalPop = 0;
@@ -119,7 +112,7 @@ public class Processor {
      * @param zipCode
      * @return fines per capita
      */
-    HashMap<Integer, Double> memFinesPC;
+    private HashMap<Integer, Double> memFinesPC = new HashMap<>();
     public double getTotalFinesPerCapita(int zipCode) throws IllegalArgumentException {
         if (memFinesPC.containsKey(zipCode)) {
             return memFinesPC.get(zipCode);
@@ -167,7 +160,7 @@ public class Processor {
      * @return average market value
      */
 
-    HashMap<Integer, Integer> memValue = new HashMap<>(); //Memoization for Average Market value
+    private HashMap<Integer, Integer> memValue = new HashMap<>(); //Memoization for Average Market value
     public int getAverageMarketValue (int zipCode) {
         if (memValue.containsKey(zipCode)){
             return memValue.get(zipCode);
@@ -197,7 +190,7 @@ public class Processor {
      * @param zipCode
      * @return average liveable area
      */
-    HashMap<Integer, Integer> memArea = new HashMap<>(); //Memoization
+    private HashMap<Integer, Integer> memArea = new HashMap<>(); //Memoization
     public int getAverageLivableArea(int zipCode) {
         if (memArea.containsKey(zipCode)){
             return memArea.get(zipCode);
@@ -225,7 +218,7 @@ public class Processor {
      * @param zipCode
      * @return total RMV per capita
      */
-    HashMap<Integer, Integer> memValuePC = new HashMap<>(); //Memoization
+    private HashMap<Integer, Integer> memValuePC = new HashMap<>(); //Memoization
     public int getTotalValuePC(int zipCode){
         if (memValuePC.containsKey(zipCode)){
             return memValuePC.get(zipCode);
@@ -254,7 +247,7 @@ public class Processor {
      * @param zipCode
      * @return ratio
      */
-    HashMap<Integer, Double> memFinesToRMVRatio;
+    private HashMap<Integer, Double> memFinesToRMVRatio = new HashMap<>();
     public double getTotalFinesToRMVRatio(int zipCode) throws IllegalArgumentException {
         if (memFinesToRMVRatio.containsKey(zipCode)) {
             return memFinesToRMVRatio.get(zipCode);
@@ -274,7 +267,7 @@ public class Processor {
         return (double) totalFines / avgMktVal;
     }
 
-    HashMap<Integer, ArrayList<String>> memCarViolations = new HashMap<>(); //Memoization
+    private HashMap<Integer, ArrayList<String>> memCarViolations = new HashMap<>(); //Memoization
     public void getViolations(int input, HashMap<Integer, Car> cars) {
         if (memCarViolations.containsKey(input)) {
             for (String string : memCarViolations.get(input)) {

@@ -6,6 +6,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.upenn.cit594.datamanagement.CsvViolationsReader;
+import edu.upenn.cit594.datamanagement.PopulationReader;
+import edu.upenn.cit594.datamanagement.PropertiesReader;
+import edu.upenn.cit594.datamanagement.ViolationsReader;
+
 class ProcessorTest {
     
     Processor p;
@@ -13,9 +18,16 @@ class ProcessorTest {
     String propertiesFilename = "src\\sample_files\\properties_small.csv";
     String populationFilename = "src\\sample_files\\population.txt";
     
+    ViolationsReader vr;
+    PropertiesReader prr;
+    PopulationReader por;
+    
     @BeforeEach
     void setUp() {
-        p = new Processor("csv", violationsFilename, propertiesFilename, populationFilename, null);
+        vr = new CsvViolationsReader(violationsFilename, null);
+        prr = new PropertiesReader(propertiesFilename, null);
+        por = new PopulationReader(populationFilename, null);
+        p = new Processor(vr, prr, por);
     }
 
     @Test
